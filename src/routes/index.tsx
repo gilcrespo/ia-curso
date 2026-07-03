@@ -1,24 +1,776 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import logoAsset from "@/assets/logo_barracred.png.asset.json";
+import oqueQueremosAsset from "@/assets/oquequeremos.png.asset.json";
+import cerebroImg from "@/assets/ch-cerebro.png";
+import conhecimentoImg from "@/assets/ch-conhecimento.png";
+import habilidadesImg from "@/assets/ch-habilidades.png";
+import contextoImg from "@/assets/ch-contexto.png";
+import acaoImg from "@/assets/ch-acao.png";
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: Presentation,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+/* ---------- Layout primitives ---------- */
+
+function SlideShell({
+  chapter,
+  children,
+  align = "left",
+  padded = true,
+}: {
+  chapter?: string;
+  children: ReactNode;
+  align?: "left" | "center";
+  padded?: boolean;
+}) {
+  return (
+    <div className="slide-content">
+      {chapter && (
+        <div className="slide-chapter-tag absolute" style={{ top: 60, left: 110 }}>
+          CAPÍTULO {chapter}
+        </div>
+      )}
+      <div
+        className="absolute inset-0 flex flex-col"
+        style={{
+          paddingLeft: padded ? 110 : 0,
+          paddingRight: padded ? 110 : 0,
+          paddingTop: 180,
+          paddingBottom: 120,
+          justifyContent: align === "center" ? "center" : "flex-start",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function Label({ children }: { children: ReactNode }) {
+  return <div className="slide-label mb-8">{children}</div>;
+}
+
+function Underline({ children }: { children: ReactNode }) {
+  return <span className="accent-underline">{children}</span>;
+}
+
+function Card({ title, body, num }: { title: string; body?: string; num?: string }) {
   return (
     <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
+      className="flex flex-col"
+      style={{
+        border: "2px solid #111",
+        padding: "36px 40px",
+        minHeight: 240,
+      }}
     >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+      {num && <div className="slide-label text-accent mb-4">{num}</div>}
+      <div style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.1, marginBottom: 16 }}>
+        {title}
+      </div>
+      {body && <div className="slide-body" style={{ color: "#444" }}>{body}</div>}
+    </div>
+  );
+}
+
+/* ---------- Chapter divider ---------- */
+
+function ChapterCover({
+  num,
+  name,
+  image,
+  range,
+}: {
+  num: string;
+  name: string;
+  image: string;
+  range: string;
+}) {
+  return (
+    <div className="slide-content">
+      <div className="slide-chapter-tag absolute" style={{ top: 60, left: 110 }}>
+        {range}
+      </div>
+      <div
+        className="absolute inset-0 grid"
+        style={{ gridTemplateColumns: "1.1fr 0.9fr", alignItems: "center" }}
+      >
+        <div style={{ paddingLeft: 110 }}>
+          <div className="slide-label mb-8">Capítulo {num}</div>
+          <div className="slide-hero">
+            <Underline>{name}</Underline>
+          </div>
+        </div>
+        <div className="flex items-center justify-center" style={{ paddingRight: 110 }}>
+          <img src={image} alt={name} style={{ width: 620, height: 620, objectFit: "contain" }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Slides ---------- */
+
+type Slide = { id: number; render: () => ReactNode };
+
+const SLIDES: Slide[] = [
+  // 1 — Cover
+  {
+    id: 1,
+    render: () => (
+      <div className="slide-content">
+        <div className="absolute" style={{ top: 90, left: 110 }}>
+          <img src={logoAsset.url} alt="Barracred" style={{ height: 110 }} />
+        </div>
+        <div
+          className="absolute flex flex-col"
+          style={{ left: 110, right: 110, top: 340 }}
+        >
+          <div className="slide-label mb-10">Formação Interna · Barracred</div>
+          <div className="slide-hero" style={{ maxWidth: 1600 }}>
+            IA Generativa:<br />
+            do <Underline>Cérebro</Underline> à <Underline>Ação</Underline>.
+          </div>
+          <div className="slide-statement mt-14" style={{ maxWidth: 1400, color: "#333" }}>
+            Entendendo modelos, dominando ferramentas e criando soluções com contexto.
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  // 2 — O que queremos meme
+  {
+    id: 2,
+    render: () => (
+      <div className="slide-content flex items-center justify-center">
+        <img
+          src={oqueQueremosAsset.url}
+          alt="O que queremos"
+          style={{ maxWidth: "82%", maxHeight: "88%", objectFit: "contain" }}
+        />
+      </div>
+    ),
+  },
+  // 3 — Estrutura de um agente
+  {
+    id: 3,
+    render: () => (
+      <SlideShell>
+        <Label>Mapa da apresentação</Label>
+        <div className="slide-title mb-16" style={{ maxWidth: 1500 }}>
+          A estrutura de um <Underline>agente de IA</Underline>.
+        </div>
+        <div
+          className="grid gap-8"
+          style={{ gridTemplateColumns: "repeat(5, 1fr)", marginTop: 40 }}
+        >
+          {[
+            { n: "01", t: "Cérebro" },
+            { n: "02", t: "Conhecimento" },
+            { n: "03", t: "Habilidades" },
+            { n: "04", t: "Contexto" },
+            { n: "05", t: "Ação" },
+          ].map((c, i) => (
+            <div key={c.n} className="flex flex-col" style={{ borderTop: `6px solid ${i === 0 ? "#ff6b00" : "#111"}`, paddingTop: 24 }}>
+              <div className="slide-label" style={{ color: "#111" }}>{c.n}</div>
+              <div style={{ fontSize: 42, fontWeight: 700, marginTop: 12 }}>{c.t}</div>
+            </div>
+          ))}
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 4 — Cover Cérebro
+  { id: 4, render: () => <ChapterCover num="01" name="Cérebro" image={cerebroImg} range="Slides 5–9" /> },
+  // 5 — Evolução timeline
+  {
+    id: 5,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>Como chegamos até aqui</Label>
+        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+          A <Underline>evolução</Underline> da IA.
+        </div>
+        <div className="relative" style={{ marginTop: 30 }}>
+          <div style={{ height: 4, background: "#111", position: "absolute", top: 40, left: 0, right: 0 }} />
+          <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+            {[
+              { y: "70s–80s", t: "IA baseada em regras" },
+              { y: "90s–2000s", t: "IA estatística e Machine Learning" },
+              { y: "2010s", t: "Era do aprendizado profundo" },
+              { y: "2020 → hoje", t: "Era das LLMs e IA Generativa" },
+            ].map((step, i) => (
+              <div key={step.y} className="flex flex-col items-start" style={{ paddingTop: 20 }}>
+                <div
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: 999,
+                    background: i === 3 ? "#ff6b00" : "#111",
+                    marginBottom: 30,
+                  }}
+                />
+                <div className="slide-label" style={{ color: "#111" }}>{step.y}</div>
+                <div style={{ fontSize: 30, fontWeight: 600, marginTop: 12, lineHeight: 1.2 }}>
+                  {step.t}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 6 — LLMs
+  {
+    id: 6,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>O motor da IA generativa</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          O que são <Underline>LLMs</Underline>?
+        </div>
+        <div className="slide-statement mb-16" style={{ maxWidth: 1400, color: "#333" }}>
+          Large Language Models — modelos treinados em enormes volumes de texto para prever a próxima palavra e, com isso, conversar, escrever e raciocinar.
+        </div>
+        <div className="grid gap-8" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+          <Card num="Texto" title="LLMs" body="Chat, resumo, redação e análise." />
+          <Card num="Visão" title="Multimodais" body="Interpretam imagens, áudio e vídeo." />
+          <Card num="Ação" title="Modelos de raciocínio" body="Pensam por etapas antes de responder." />
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 7 — Modelos populares
+  {
+    id: 7,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>Panorama atual</Label>
+        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+          Modelos mais <Underline>populares</Underline> hoje.
+        </div>
+        <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+          {[
+            { b: "OpenAI", m: "GPT-5 / GPT-4o" },
+            { b: "Anthropic", m: "Claude Sonnet 4.5" },
+            { b: "Google", m: "Gemini 2.5 / 3" },
+            { b: "Open source", m: "Llama · Mistral · DeepSeek" },
+          ].map((x) => (
+            <div key={x.b} style={{ borderLeft: "4px solid #ff6b00", paddingLeft: 24 }}>
+              <div className="slide-label" style={{ color: "#111" }}>{x.b}</div>
+              <div style={{ fontSize: 34, fontWeight: 700, marginTop: 14, lineHeight: 1.15 }}>{x.m}</div>
+            </div>
+          ))}
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 8 — Tokens e limitações
+  {
+    id: 8,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>A unidade que o modelo "enxerga"</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          <Underline>Tokens</Underline> e limitações.
+        </div>
+        <div className="slide-statement mb-14" style={{ maxWidth: 1500, color: "#333" }}>
+          Tudo que entra e sai do modelo é medido em tokens — pedaços de palavras. Cada modelo tem uma "janela" máxima do que consegue lembrar de uma vez.
+        </div>
+        <div className="grid gap-10" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+          <div>
+            <div className="slide-num text-accent">~4</div>
+            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
+              caracteres por token, em média (português).
+            </div>
+          </div>
+          <div>
+            <div className="slide-num text-accent">128k</div>
+            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
+              tokens de contexto em modelos usuais.
+            </div>
+          </div>
+          <div>
+            <div className="slide-num text-accent">1M+</div>
+            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
+              tokens nos modelos mais recentes.
+            </div>
+          </div>
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 9 — Custos
+  {
+    id: 9,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>Você paga pelo que usa</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          <Underline>Custos</Underline> por token.
+        </div>
+        <div className="slide-statement mb-14" style={{ maxWidth: 1500, color: "#333" }}>
+          Cobra-se por milhão de tokens — entrada e saída são precificadas separadamente.
+        </div>
+        <div className="grid gap-10 items-end" style={{ gridTemplateColumns: "repeat(4, 1fr)", height: 380 }}>
+          {[
+            { m: "Modelo econômico", h: 60, p: "US$ 0,15 / 1M" },
+            { m: "Modelo padrão", h: 120, p: "US$ 2,50 / 1M" },
+            { m: "Modelo avançado", h: 220, p: "US$ 10 / 1M" },
+            { m: "Modelo de raciocínio", h: 340, p: "US$ 60 / 1M" },
+          ].map((b, i) => (
+            <div key={b.m} className="flex flex-col items-start h-full justify-end">
+              <div
+                style={{
+                  width: "100%",
+                  height: b.h,
+                  background: i === 3 ? "#ff6b00" : "#111",
+                }}
+              />
+              <div className="slide-label" style={{ color: "#111", marginTop: 20 }}>{b.m}</div>
+              <div style={{ fontSize: 26, fontWeight: 600, marginTop: 8 }}>{b.p}</div>
+            </div>
+          ))}
+        </div>
+        <div className="slide-caption" style={{ marginTop: 24 }}>
+          Valores ilustrativos. Modelos maiores e "pensantes" custam mais por resposta.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 10 — Cover Conhecimento
+  { id: 10, render: () => <ChapterCover num="02" name="Conhecimento" image={conhecimentoImg} range="Slides 11–13" /> },
+  // 11 — Projeto no ChatGPT
+  {
+    id: 11,
+    render: () => (
+      <SlideShell chapter="CONHECIMENTO">
+        <Label>Memória de trabalho</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          <Underline>Projetos</Underline> no ChatGPT.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Um espaço com instruções fixas, arquivos e histórico próprios — como criar um "colaborador" especialista para um tema recorrente da cooperativa.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 12 — NotebookLM
+  {
+    id: 12,
+    render: () => (
+      <SlideShell chapter="CONHECIMENTO">
+        <Label>Base de fontes confiáveis</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          PDFs e vídeos no <Underline>NotebookLM</Underline>.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Suba manuais, atas, resoluções do BCB e vídeos. A IA responde citando exatamente o trecho de origem.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 13 — Markdown
+  {
+    id: 13,
+    render: () => (
+      <SlideShell chapter="CONHECIMENTO">
+        <Label>O formato preferido das IAs</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Arquivos <Underline>Markdown</Underline>.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Texto simples com estrutura clara — títulos, listas e tabelas. Leve, versionável e lido perfeitamente por qualquer modelo.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 14 — Cover Habilidades
+  { id: 14, render: () => <ChapterCover num="03" name="Habilidades" image={habilidadesImg} range="Slides 15–17" /> },
+  // 15 — Assistentes web
+  {
+    id: 15,
+    render: () => (
+      <SlideShell chapter="HABILIDADES">
+        <Label>Onde conversamos com a IA</Label>
+        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+          Assistentes <Underline>web por chat</Underline>.
+        </div>
+        <div className="grid gap-8" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+          <Card num="OpenAI" title="ChatGPT" body="O mais conhecido. Forte em texto, imagem e voz." />
+          <Card num="Anthropic" title="Claude" body="Ótimo para textos longos e análise de documentos." />
+          <Card num="Google" title="Gemini" body="Integrado ao Workspace, YouTube e Google Search." />
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 16 — Assistentes instalados
+  {
+    id: 16,
+    render: () => (
+      <SlideShell chapter="HABILIDADES">
+        <Label>IA dentro do seu computador</Label>
+        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+          Assistentes <Underline>instalados</Underline> na máquina.
+        </div>
+        <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+          {["Codex", "Claude", "Trae", "Copilot"].map((n) => (
+            <div key={n} style={{ border: "2px solid #111", padding: "40px 32px", minHeight: 200 }}>
+              <div className="slide-label text-accent mb-4">Desktop</div>
+              <div style={{ fontSize: 44, fontWeight: 700 }}>{n}</div>
+            </div>
+          ))}
+        </div>
+        <div className="slide-caption" style={{ marginTop: 30, maxWidth: 1400 }}>
+          Rodam localmente, leem seus arquivos e podem executar tarefas no sistema — potência de agente no seu dia a dia.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 17 — Habilidades padrões
+  {
+    id: 17,
+    render: () => (
+      <SlideShell chapter="HABILIDADES">
+        <Label>O que a IA já sabe fazer</Label>
+        <div className="slide-title mb-12" style={{ maxWidth: 1500 }}>
+          Habilidades <Underline>padrões</Underline>.
+        </div>
+        <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+          {[
+            "Criar imagens",
+            "Pensamento profundo",
+            "Pesquisa na web",
+            "Criar músicas",
+            "Criar apresentações",
+            "Criar vídeos",
+            "Integrações",
+            "Plugins diversos",
+          ].map((h) => (
+            <div
+              key={h}
+              style={{
+                border: "2px solid #111",
+                padding: "26px 24px",
+                fontSize: 28,
+                fontWeight: 600,
+                minHeight: 110,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {h}
+            </div>
+          ))}
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 18 — Cover Contexto
+  { id: 18, render: () => <ChapterCover num="04" name="Contexto" image={contextoImg} range="Slides 19–25" /> },
+  // 19 — O que é contexto
+  {
+    id: 19,
+    render: () => (
+      <SlideShell chapter="CONTEXTO">
+        <Label>O ingrediente que muda tudo</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          O que é <Underline>contexto</Underline>?
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          É toda informação que a IA recebe para entender quem você é, o que você quer e como deve responder. Sem contexto, ela chuta. Com contexto, ela acerta.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 20 — Anatomia
+  {
+    id: 20,
+    render: () => (
+      <SlideShell chapter="CONTEXTO">
+        <Label>Como se monta um bom prompt</Label>
+        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+          A <Underline>anatomia</Underline> do contexto.
+        </div>
+        <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
+          {[
+            { n: "01", t: "Papel", d: "Quem a IA deve ser." },
+            { n: "02", t: "Objetivo", d: "O que você quer alcançar." },
+            { n: "03", t: "Entrada", d: "Os dados ou o material." },
+            { n: "04", t: "Regras", d: "Restrições e formato." },
+            { n: "05", t: "Exemplo", d: "Como uma boa resposta se parece." },
+          ].map((x, i) => (
+            <div key={x.n} style={{ borderTop: `6px solid ${i === 2 ? "#ff6b00" : "#111"}`, paddingTop: 20 }}>
+              <div className="slide-label" style={{ color: "#111" }}>{x.n}</div>
+              <div style={{ fontSize: 34, fontWeight: 700, marginTop: 10 }}>{x.t}</div>
+              <div className="slide-body" style={{ color: "#555", marginTop: 8 }}>{x.d}</div>
+            </div>
+          ))}
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 21 — Exercício falado
+  {
+    id: 21,
+    render: () => (
+      <SlideShell chapter="CONTEXTO" align="center">
+        <Label>Pausa para reflexão</Label>
+        <div className="slide-hero" style={{ maxWidth: 1600 }}>
+          Vamos fazer um <Underline>exercício falado</Underline>?
+        </div>
+        <div className="slide-statement" style={{ marginTop: 40, maxWidth: 1300, color: "#555" }}>
+          Descreva, em voz alta, uma tarefa da sua rotina para um "estagiário" que nunca trabalhou na cooperativa.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 22 — Mão na massa: contexto
+  {
+    id: 22,
+    render: () => (
+      <SlideShell chapter="CONTEXTO">
+        <Label>Exercício · Mão na massa · 1/4</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Comece pelo <Underline>contexto</Underline>.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Escreva quem é você, em qual cooperativa trabalha, qual é o público atendido e qual tarefa quer resolver hoje.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 23 — Mão na massa: exemplo
+  {
+    id: 23,
+    render: () => (
+      <SlideShell chapter="CONTEXTO">
+        <Label>Exercício · Mão na massa · 2/4</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Mostre um <Underline>exemplo</Underline>.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Cole um caso real (com dados fictícios) do resultado esperado. Um bom exemplo vale mais do que dez linhas de instrução.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 24 — Cadeia de pensamento
+  {
+    id: 24,
+    render: () => (
+      <SlideShell chapter="CONTEXTO">
+        <Label>Exercício · Mão na massa · 3/4</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Peça uma <Underline>cadeia de pensamento</Underline>.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          "Pense passo a passo antes de responder." Uma frase simples que melhora drasticamente análises contábeis, comerciais e de crédito.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 25 — Iteração
+  {
+    id: 25,
+    render: () => (
+      <SlideShell chapter="CONTEXTO">
+        <Label>Exercício · Mão na massa · 4/4</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          <Underline>Itere</Underline> a resposta.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Ninguém acerta de primeira — nem você, nem a IA. Reforce o que ficou bom, corrija o que ficou fraco e peça de novo.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 26 — Cover Ação
+  { id: 26, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="Slides 27–29" /> },
+  // 27 — Skills
+  {
+    id: 27,
+    render: () => (
+      <SlideShell chapter="AÇÃO">
+        <Label>Do prompt à execução</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Habilidades <Underline>customizadas</Underline>.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Skills são procedimentos prontos que a IA aprende uma vez e executa sempre da mesma forma — para tarefas repetitivas da cooperativa.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 28 — Exemplos skills
+  {
+    id: 28,
+    render: () => (
+      <SlideShell chapter="AÇÃO">
+        <Label>O que já é possível automatizar</Label>
+        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+          Exemplos de <Underline>skills</Underline>.
+        </div>
+        <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+          {[
+            { n: "Comercial", t: "Roteiro de abordagem por perfil de associado" },
+            { n: "Contábil", t: "Conciliação e checklist de fechamento mensal" },
+            { n: "Administrativo", t: "Ata resumida a partir da gravação da reunião" },
+            { n: "Crédito", t: "Sumário de proposta com pontos de atenção" },
+            { n: "Atendimento", t: "Resposta padrão de e-mail com tom da marca" },
+            { n: "Compliance", t: "Revisão de contrato contra política interna" },
+          ].map((s) => (
+            <div key={s.n} style={{ borderLeft: "4px solid #ff6b00", paddingLeft: 20 }}>
+              <div className="slide-label" style={{ color: "#111" }}>{s.n}</div>
+              <div style={{ fontSize: 28, fontWeight: 600, marginTop: 10, lineHeight: 1.25 }}>{s.t}</div>
+            </div>
+          ))}
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 29 — Juntando tudo
+  {
+    id: 29,
+    render: () => (
+      <SlideShell chapter="AÇÃO">
+        <Label>Exercício final · Mão na massa</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          <Underline>Juntando tudo</Underline>.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Escolha uma tarefa real da sua área. Escreva o contexto, dê um exemplo, peça cadeia de pensamento e itere até virar uma skill que você usa toda semana.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 30 — Encerramento meme
+  {
+    id: 30,
+    render: () => (
+      <div className="slide-content flex items-center justify-center">
+        <img
+          src={oqueQueremosAsset.url}
+          alt="O que queremos"
+          style={{ maxWidth: "82%", maxHeight: "88%", objectFit: "contain" }}
+        />
+      </div>
+    ),
+  },
+];
+
+/* ---------- Presentation shell ---------- */
+
+function Presentation() {
+  const [index, setIndex] = useState(() => {
+    if (typeof window === "undefined") return 0;
+    const p = new URLSearchParams(window.location.search).get("slide");
+    const n = p ? parseInt(p, 10) : 1;
+    return Math.min(Math.max((isNaN(n) ? 1 : n) - 1, 0), SLIDES.length - 1);
+  });
+
+  const go = useCallback((next: number) => {
+    setIndex((cur) => {
+      const clamped = Math.min(Math.max(next, 0), SLIDES.length - 1);
+      const url = new URL(window.location.href);
+      url.searchParams.set("slide", String(clamped + 1));
+      window.history.replaceState({}, "", url.toString());
+      return clamped;
+    });
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+        e.preventDefault();
+        go(index + 1);
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        go(index - 1);
+      } else if (e.key === "Home") go(0);
+      else if (e.key === "End") go(SLIDES.length - 1);
+      else if (e.key === "f" || e.key === "F") {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [index, go]);
+
+  useEffect(() => {
+    document.title = `${index + 1}/${SLIDES.length} · IA Generativa — Barracred`;
+  }, [index]);
+
+  // Fit scale
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.5);
+  useLayoutEffect(() => {
+    const update = () => {
+      if (!stageRef.current) return;
+      const { clientWidth: w, clientHeight: h } = stageRef.current;
+      setScale(Math.min(w / 1920, h / 1080));
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const slide = SLIDES[index];
+
+  return (
+    <div className="min-h-screen w-full flex flex-col" style={{ background: "#f5f5f5" }}>
+      <div ref={stageRef} className="relative flex-1 overflow-hidden">
+        <div className="slide-wrapper" style={{ transform: `scale(${scale})` }}>
+          {slide.render()}
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div
+        className="fixed flex items-center gap-3 px-4 py-2 rounded-full"
+        style={{
+          left: "50%",
+          transform: "translateX(-50%)",
+          bottom: 24,
+          background: "rgba(17,17,17,0.85)",
+          color: "white",
+          backdropFilter: "blur(6px)",
+          fontFamily: "Poppins",
+        }}
+      >
+        <button
+          onClick={() => go(index - 1)}
+          className="px-3 py-1 text-sm font-medium hover:opacity-70"
+          aria-label="Anterior"
+        >
+          ←
+        </button>
+        <div className="text-sm tabular-nums" style={{ minWidth: 60, textAlign: "center" }}>
+          {index + 1} / {SLIDES.length}
+        </div>
+        <button
+          onClick={() => go(index + 1)}
+          className="px-3 py-1 text-sm font-medium hover:opacity-70"
+          aria-label="Próximo"
+        >
+          →
+        </button>
+        <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.2)" }} />
+        <button
+          onClick={() => {
+            if (document.fullscreenElement) document.exitFullscreen();
+            else document.documentElement.requestFullscreen();
+          }}
+          className="px-3 py-1 text-xs font-medium hover:opacity-70"
+        >
+          Tela cheia (F)
+        </button>
+      </div>
     </div>
   );
 }
