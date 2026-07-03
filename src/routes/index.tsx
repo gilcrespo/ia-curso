@@ -661,6 +661,21 @@ const SLIDES: Slide[] = [
       </div>
     ),
   },
+  // 31 — Agradecimento
+  {
+    id: 31,
+    render: () => (
+      <div className="slide-content flex flex-col items-center justify-center gap-16">
+        <h1 className="slide-title-lg" style={{ fontWeight: 800 }}>Obrigado</h1>
+        <img
+          src={logoAsset.url}
+          alt="Logo Barracred"
+          style={{ width: 420, height: "auto", objectFit: "contain" }}
+        />
+      </div>
+    ),
+  },
+
 ];
 
 /* ---------- Presentation shell ---------- */
