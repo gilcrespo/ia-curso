@@ -188,6 +188,12 @@
 
 .text-accent { color: var(--slide-accent); }
 
+.slide-content a {
+  color: var(--slide-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .slide-wrapper {
   position: absolute;
   width: 1920px;

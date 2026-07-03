@@ -86,7 +86,13 @@ function Card({ title, body, num }: { title: string; body?: string; num?: string
       <div style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.1, marginBottom: 16 }}>
         {title}
       </div>
-      {body && <div className="slide-body" style={{ color: "#444" }}>{body}</div>}
+      {body && (
+        <div
+          className="slide-body"
+          style={{ color: "#444" }}
+          dangerouslySetInnerHTML={{ __html: body }}
+        />
+      )}
     </div>
   );
 }
@@ -334,7 +340,7 @@ const SLIDES: Slide[] = [
             { m: "Modelo para uso geral", h: 120, p: "US$ 1,50 / 1M" },
             { m: "Modelo para planejar", h: 220, p: "US$ 2,50 / 1M" },
             { m: "Modelo mais avançado", h: 340, p: "US$ 10 / 1M" },
-            
+
           ].map((b, i) => (
             <div key={b.m} className="flex flex-col items-start h-full justify-end">
               <div
@@ -545,7 +551,11 @@ const SLIDES: Slide[] = [
           O poder (e o limite) da <Underline>personificação</Underline>.
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Escreva quem é você, em qual cooperativa trabalha, qual é o público atendido e qual tarefa quer resolver hoje.
+          <br />Explique como melhorar a qualidade de um software.<br /><br />
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#000" }}>
+          <strong>Atue como um arquiteto de software com 20 anos de experiência, especialista em sistemas críticos e mentor de equipes de desenvolvimento.</strong><br />
+          Explique como melhorar a qualidade de um software.
         </div>
       </SlideShell>
     ),
@@ -629,10 +639,15 @@ const SLIDES: Slide[] = [
             { n: "Crédito", t: "Sumário de proposta com pontos de atenção" },
             { n: "Atendimento", t: "Resposta padrão de e-mail com tom da marca" },
             { n: "Compliance", t: "Revisão de contrato contra política interna" },
+            { n: "Humanizer", t: "Especialista em remover marcas de escrita por IA - <a href='https://www.skills.sh/mackswendhell/humanizer-pt-br/humanizer-pt-br'>Acessar link</a>" },
+            { n: "Book-to-Skill", t: "Transforme livro técnico em skill - <a href='https://github.com/virgiliojr94/book-to-skill'>Acessar link</a>" },
           ].map((s) => (
             <div key={s.n} style={{ borderLeft: "4px solid #ff6b00", paddingLeft: 20 }}>
               <div className="slide-label" style={{ color: "#111" }}>{s.n}</div>
-              <div style={{ fontSize: 28, fontWeight: 600, marginTop: 10, lineHeight: 1.25 }}>{s.t}</div>
+              <div
+                style={{ fontSize: 28, fontWeight: 600, marginTop: 10, lineHeight: 1.25 }}
+                dangerouslySetInnerHTML={{ __html: s.t }}
+              />
             </div>
           ))}
         </div>
