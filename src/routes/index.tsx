@@ -400,7 +400,7 @@ const SLIDES: Slide[] = [
           Arquivos <Underline>Markdown</Underline>.
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Texto simples com estrutura clar, como: títulos, listas e tabelas. Leve, versionável e lido perfeitamente por qualquer modelo.
+          Texto simples com estrutura clara com títulos, listas e tabelas. Leve, versionável e lido perfeitamente por qualquer modelo.
         </div>
       </SlideShell>
     ),
@@ -497,8 +497,8 @@ const SLIDES: Slide[] = [
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
           O que é <Underline>contexto</Underline>?
         </div>
-        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          São as definições que a IA recebe para entender quem você é, o que você quer e como deve responder. Sem contexto, ela chuta o que <Underline>faltou definir ou deixa genérico</Underline>.
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}><br />
+          São as definições que a IA recebe para entender quem você é, o que você quer e como deve responder. Sem contexto, ela <Underline>chuta o que faltou definir</Underline> ou deixa genérico.
         </div>
       </SlideShell>
     ),
@@ -510,7 +510,7 @@ const SLIDES: Slide[] = [
       <SlideShell chapter="CONTEXTO">
         <Label>Como se monta um bom prompt</Label>
         <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
-          A <Underline>anatomia</Underline> do contexto.
+          A <Underline>anatomia</Underline> de um prompt.
         </div>
         <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
           {[
@@ -548,7 +548,7 @@ const SLIDES: Slide[] = [
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 1/4 · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          O poder (e o limite) da <Underline>personificação</Underline>.
+          O poder (e o limite) da <Underline>personificação</Underline>
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
           <br />Explique como melhorar a qualidade de um software.<br /><br />
@@ -567,11 +567,16 @@ const SLIDES: Slide[] = [
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 2/4 · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          Mostre um <Underline>exemplo</Underline>.
+          Instruir através de <Underline>exemplo</Underline>
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Cole um caso real (com dados fictícios) do resultado esperado. Um bom exemplo vale mais do que dez linhas de instrução.
-        </div>
+          Um bom exemplo vale mais do que dez linhas explicando.
+        </div><br />
+        <ul className="slide-statement list-disc list-inside pl-6" style={{ maxWidth: 1500, color: "#333" }}>
+          <li>User story de implementação autenticação via Google</li>
+          <li>Pull request de bugfix de timeout na integração com o serviço de pagamentos</li>
+          <li>Histórico de consumo de tokens</li>
+        </ul>
       </SlideShell>
     ),
   },
@@ -582,10 +587,17 @@ const SLIDES: Slide[] = [
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 3/4 · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          Peça uma <Underline>cadeia de pensamento</Underline>.
+          Pensando em <Underline>etapas</Underline>.
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          "Pense passo a passo antes de responder." Uma frase simples que melhora drasticamente análises contábeis, comerciais e de crédito.
+          A qualidade das respostas melhora quando conduzimos a conversa como um processo
+        </div><br /><br />
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Vamos resolver este problema em etapas. Após responder, aguarde minha confirmação para continuar o assunto.
+          Primeiro: identifique os principais desafios da migração.
+        </div><br /><br />
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Agora proponha uma arquitetura.
         </div>
       </SlideShell>
     ),
@@ -597,10 +609,14 @@ const SLIDES: Slide[] = [
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 4/4 · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          <Underline>Itere</Underline> a resposta.
+          Construindo prompt por <Underline>iteração com IA</Underline>
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Ninguém acerta de primeira (nem você, nem a IA). Reforce o que ficou bom, corrija o que ficou fraco e peça de novo.
+          Em vez de tentar escrever um prompt perfeito, experimente deixar a IA te ajudar
+        </div><br /><br />
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Quero criar .... <br />
+          Antes de responder, faça todas as perguntas necessárias para entender o problema. Não faça suposições. Somente depois que eu responder às perguntas, elabore a solução.
         </div>
       </SlideShell>
     ),
@@ -617,7 +633,7 @@ const SLIDES: Slide[] = [
           Habilidades <Underline>customizadas</Underline>.
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Skills são procedimentos prontos que a IA aprende uma vez e executa sempre da mesma forma para tarefas repetitivas da cooperativa.
+          Skills são procedimentos, instruções, comportamentos que a IA aprende uma vez e as executam sempre da mesma forma.
         </div>
       </SlideShell>
     ),
@@ -633,8 +649,6 @@ const SLIDES: Slide[] = [
         </div>
         <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
           {[
-            { n: "Comercial", t: "Roteiro de abordagem por perfil de associado" },
-            { n: "Contábil", t: "Conciliação e checklist de fechamento mensal" },
             { n: "Administrativo", t: "Ata resumida a partir da gravação da reunião" },
             { n: "Crédito", t: "Sumário de proposta com pontos de atenção" },
             { n: "Atendimento", t: "Resposta padrão de e-mail com tom da marca" },
@@ -664,7 +678,17 @@ const SLIDES: Slide[] = [
           <Underline>Juntando tudo</Underline>.
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Escolha uma tarefa real da sua área. Escreva o contexto, dê um exemplo, peça cadeia de pensamento e itere até virar uma skill que você usa toda semana.
+          Escolha algo que você faz toda semana transforme uma <Underline>Skill</Underline>.<br />
+          Pode ser, por exemplo:
+          <ul className="list-disc list-inside pl-6">
+            <li>Revisar um Pull Request.</li>
+            <li>Escrever casos de teste.</li>
+            <li>Criar User Stories.</li>
+            <li>Gerar documentação.</li>
+            <li>Escrever consultas SQL.</li>
+            <li>Analisar logs.</li>
+            <li>Investigar bugs.</li>
+          </ul>
         </div>
       </SlideShell>
     ),
@@ -686,9 +710,18 @@ const SLIDES: Slide[] = [
   {
     id: 31,
     render: () => (
-      <div className="slide-content flex flex-col items-center justify-center gap-16">
-        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          Quanto <Underline>mais</Underline> praticarmos, <Underline>melhores</Underline> serão os resultados.
+      <div className="slide-content flex flex-col items-center justify-center text-center px-[200px]">
+        <div className="slide-statement mb-12" style={{ maxWidth: 1400, fontSize: 42, color: "#444" }}>
+          <strong>Ontem:</strong><br /> você apenas conversava com a IA. ("oi chat")
+        </div>
+        <div className="slide-title mb-12" style={{ maxWidth: 1100, fontSize: 60, lineHeight: 1.1 }}>
+          Hoje:<br /> você extrai melhor informação, e<br /> cria habilidades reutilizáveis para futuros agentes.
+        </div><br /><br />
+        <div className="slide-statement" style={{ maxWidth: 1200, color: "#444", fontSize: 42 }}>
+          <strong>No próximo módulo:</strong><br />
+          🔄 Fluxos que executam sequência de tarefas<br />
+          ⚙️ Pequenas automações dinâmicas<br />
+          📅 Agendamento de ações diárias<br />
         </div>
       </div>
     ),
