@@ -219,9 +219,9 @@ const SLIDES: Slide[] = [
           <div style={{ height: 4, background: "#111", position: "absolute", top: 40, left: 0, right: 0 }} />
           <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
             {[
-              { y: "70s–80s", t: "IA baseada em regras" },
-              { y: "90s–2000s", t: "IA estatística e Machine Learning" },
-              { y: "2010s", t: "Era do aprendizado profundo" },
+              { y: "anos 70–80", t: "IA baseada em regras" },
+              { y: "anos 90–2000", t: "IA estatística e Machine Learning" },
+              { y: "2010 → hoje", t: "Era do aprendizado profundo (Deep Learning)" },
               { y: "2020 → hoje", t: "Era das LLMs e IA Generativa" },
             ].map((step, i) => (
               <div key={step.y} className="flex flex-col items-start" style={{ paddingTop: 20 }}>
@@ -336,10 +336,10 @@ const SLIDES: Slide[] = [
         </div>
         <div className="grid gap-10 items-end" style={{ gridTemplateColumns: "repeat(4, 1fr)", height: 380 }}>
           {[
-            { m: "Modelo econômico", h: 60, p: "US$ 0,15 / 1M" },
-            { m: "Modelo para uso geral", h: 120, p: "US$ 1,50 / 1M" },
-            { m: "Modelo para planejar", h: 220, p: "US$ 2,50 / 1M" },
-            { m: "Modelo mais avançado", h: 340, p: "US$ 10 / 1M" },
+            { m: "Modelo econômico", h: 40, p: "US$ 0,3 + US$ 2,5 / 1M" },
+            { m: "Modelo para uso geral", h: 60, p: "US$ 0,50 + US$ 3 / 1M" },
+            { m: "Modelo para planejar", h: 140, p: "US$ 3 + US$ 15 / 1M" },
+            { m: "Modelo mais avançado", h: 340, p: "US$ 10 + US$ 50 / 1M" },
 
           ].map((b, i) => (
             <div key={b.m} className="flex flex-col items-start h-full justify-end">
