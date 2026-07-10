@@ -8,6 +8,8 @@ import conhecimentoImg from "@/assets/ch-conhecimento.png";
 import habilidadesImg from "@/assets/ch-habilidades.png";
 import contextoImg from "@/assets/ch-contexto.png";
 import acaoImg from "@/assets/ch-acao.png";
+import custosImg from "@/assets/custos.png";
+import tokenVisualImg from "@/assets/token-visual.png";
 
 const CHAPTER_IMAGES: Record<string, string> = {
   "CÉREBRO": cerebroImg,
@@ -34,18 +36,29 @@ function SlideShell({
   align?: "left" | "center";
   padded?: boolean;
 }) {
-  const chapterImg = chapter ? CHAPTER_IMAGES[chapter] : null;
-
   return (
     <div className="slide-content">
       {chapter && (
         <div
           className="slide-chapter-tag absolute flex items-center gap-4"
-          style={{ top: 60, left: 90 }}
+          style={{ top: 50, left: 90 }}
         >
-          {chapterImg && (
-            <img src={chapterImg} alt="" style={{ width: 80, height: 80, objectFit: "contain" }} />
-          )}
+          {Object.entries(CHAPTER_IMAGES).map(([name, img]) => (
+            <img
+              key={name}
+              src={img}
+              alt={name}
+              style={{
+                width: name === chapter ? 120 : 80,
+                height: name === chapter ? 120 : 80,
+                objectFit: "contain",
+                filter: name === chapter ? "none" : "grayscale(100%)",
+                border: name === chapter ? "4px solid #f97316" : "2px solid transparent",
+                borderRadius: "50%",
+                transition: "all 0.3s ease",
+              }}
+            />
+          ))}
         </div>
       )}
       <div
@@ -325,9 +338,30 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 9 — Custos
+  // 9 — Visualização de Tokens
   {
     id: 9,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>Exemplo prático</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Como <Underline>prever</Underline> próximo token
+        </div>
+        <div className="flex items-center justify-center flex-1" style={{ marginTop: 20 }}>
+          <a href="https://poloclub.github.io/transformer-explainer/" target="_blank">
+          <img
+            src={tokenVisualImg}
+            alt="Visualização de Tokens"
+            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", borderRadius: 12 }}
+          />
+          </a>
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 10 — Custos
+  {
+    id: 10,
     render: () => (
       <SlideShell chapter="CÉREBRO">
         <Label>Você paga pelo que usa</Label>
@@ -358,11 +392,26 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 10 — Cover Conhecimento
-  { id: 10, render: () => <ChapterCover num="02" name="Conhecimento" image={conhecimentoImg} range="" /> },
-  // 11 — Assistentes web
+  // 11 — Custos imagem
   {
     id: 11,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <div className="flex items-center justify-center h-full w-full">
+          <img
+            src={custosImg}
+            alt="Custos"
+            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+          />
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 12 — Cover Conhecimento
+  { id: 12, render: () => <ChapterCover num="02" name="Conhecimento" image={conhecimentoImg} range="" /> },
+  // 13 — Assistentes web
+  {
+    id: 13,
     render: () => (
       <SlideShell chapter="CONHECIMENTO">
         <Label>Onde conversamos com a IA</Label>
@@ -377,9 +426,9 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 12 — Projeto no ChatGPT
+  // 14 — Projeto no ChatGPT
   {
-    id: 12,
+    id: 14,
     render: () => (
       <SlideShell chapter="CONHECIMENTO">
         <Label>Memória de trabalho</Label>
@@ -392,9 +441,9 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 13 — NotebookLM
+  // 15 — NotebookLM
   {
-    id: 13,
+    id: 15,
     render: () => (
       <SlideShell chapter="CONHECIMENTO">
         <Label>Base de fontes confiáveis</Label>
@@ -407,26 +456,11 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 14 — Markdown
+  // 16 — Cover Contexto
+  { id: 17, render: () => <ChapterCover num="03" name="Contexto" image={contextoImg} range="" /> },
+  // 17 — O que é contexto
   {
-    id: 14,
-    render: () => (
-      <SlideShell chapter="CONHECIMENTO">
-        <Label>O formato preferido das IAs</Label>
-        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          Arquivos de <Underline>instruções</Underline>.
-        </div>
-        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Com texto simples é possível especificar ou descrever experiências e processos que o modelo não conhece.
-        </div>
-      </SlideShell>
-    ),
-  },
-  // 15 — Cover Contexto
-  { id: 15, render: () => <ChapterCover num="03" name="Contexto" image={contextoImg} range="" /> },
-  // 16 — O que é contexto
-  {
-    id: 16,
+    id: 18,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>O ingrediente que muda tudo</Label>
@@ -434,14 +468,14 @@ const SLIDES: Slide[] = [
           O que é <Underline>contexto</Underline>?
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}><br />
-          São as definições que a IA recebe para entender quem você é, o que você quer e como deve responder. Sem contexto, ela <Underline>chuta o que faltou definir</Underline> ou deixa genérico.
+          São as definições que a IA recebe para entender quem você é, o que você quer e como deve responder. Sem contexto, ela <strong>chuta o que faltou definir</strong> ou deixa genérico.
         </div>
       </SlideShell>
     ),
   },
-  // 17 — Anatomia
+  // 18 — Anatomia
   {
-    id: 17,
+    id: 19,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Como se monta um bom prompt</Label>
@@ -450,13 +484,13 @@ const SLIDES: Slide[] = [
         </div>
         <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
           {[
-            { n: "01", t: "Personificação", d: "Quem a IA deve parecer ser." },
-            { n: "02", t: "Tarefa, Objetivo", d: "O que você quer alcançar." },
-            { n: "03", t: "Contexto em si", d: "Os dados, arquivos ou o material." },
-            { n: "04", t: "Regras, Formato", d: "Restrições e formato esperado." },
+            { n: "01", t: "Personificação (Role)", d: "Quem a IA deve parecer ser.", letter:"R" },
+            { n: "02", t: "Tarefa, Objetivo", d: "O que você quer alcançar.", letter:"T" },
+            { n: "03", t: "Contexto adicional", d: "Especificações, arquivos, material, restrições, exemplos, público-alvo", letter:"C" },
+            { n: "04", t: "Formato", d: "Formato esperado.", letter:"F" },
           ].map((x, i) => (
-            <div key={x.n} style={{ borderTop: `6px solid ${i === 2 ? "#ff6b00" : "#111"}`, paddingTop: 20, marginTop: 80 }}>
-              <div className="slide-label" style={{ color: "#111" }}>{x.n}</div>
+            <div key={x.n}> <br/>
+              <div style={{ fontSize: 84, fontWeight: 700, marginTop: 10, borderBottom: `6px solid #111`, paddingTop: 20, color: x.letter == "C" ? "#ff6b00" : "#111" }}>{x.letter}</div>
               <div style={{ fontSize: 34, fontWeight: 700, marginTop: 10 }}>{x.t}</div>
               <div className="slide-body" style={{ color: "#555", marginTop: 8 }}>{x.d}</div>
             </div>
@@ -465,30 +499,31 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 18 — Exercício falado
+  // 19 — Exercício falado
   {
-    id: 18,
+    id: 20,
     render: () => (
       <SlideShell chapter="CONTEXTO" align="center">
         <Label>Pausa para reflexão</Label>
         <div className="slide-hero" style={{ maxWidth: 1600 }}>
           Vamos fazer um exercício <Underline>falado</Underline>?
         </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          <br />Qual é o prompt para uma nova campanha de marketing?<br /><br />
+        </div>
       </SlideShell>
     ),
   },
-  // 19 — Mão na massa: contexto
+  // 20 — Mão na massa: contexto
   {
-    id: 19,
+    id: 21,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 1/4 · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          O poder (e o limite) da <Underline>personificação</Underline>
+          O poder da <Underline>personificação</Underline>
         </div>
-        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          <br />Explique como melhorar a qualidade de um software.<br /><br />
-        </div>
+        <br /><br />
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#000" }}>
           <strong>Atue como um arquiteto de software com 20 anos de experiência, especialista em sistemas críticos e mentor de equipes de desenvolvimento.</strong><br />
           Explique como melhorar a qualidade de um software.
@@ -496,9 +531,9 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 20 — Mão na massa: exemplo
+  // 21 — Mão na massa: exemplo
   {
-    id: 20,
+    id: 22,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 2/4 · Mão na massa</Label>
@@ -516,20 +551,18 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 21 — Cadeia de pensamento
+  // 22 — Cadeia de pensamento
   {
-    id: 21,
+    id: 22,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 3/4 · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
           Pensando em <Underline>etapas</Underline>.
-        </div>
-        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          A qualidade das respostas melhora quando conduzimos a conversa como um processo
         </div><br /><br />
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Vamos resolver este problema em etapas. Após responder, aguarde minha confirmação para continuar o assunto.
+          <strong>Vamos resolver este problema em etapas. Após responder, aguarde minha confirmação para continuar o assunto.</strong>
+          <br /><br />
           Primeiro: identifique os principais desafios da migração.
         </div><br /><br />
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
@@ -538,31 +571,47 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 22 — Iteração
+  // 23 — Iteração
   {
-    id: 22,
+    id: 23,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 4/4 · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
           Construindo prompt por <Underline>iteração com IA</Underline>
         </div>
+        <br /><br />
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Em vez de tentar escrever um prompt perfeito, experimente deixar a IA te ajudar
-        </div><br /><br />
-        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Quero criar .... <br />
-          Antes de responder, faça todas as perguntas necessárias para entender o problema. Não faça suposições. Somente depois que eu responder às perguntas, elabore a solução.
+          <br />Quero criar .... <br />
+          <strong>Antes de responder, faça todas as perguntas necessárias para entender o problema. Não faça suposições. Somente depois que eu responder às perguntas, elabore a solução.</strong>
         </div>
       </SlideShell>
     ),
   },
-  // 23 — Cover Habilidades
-  { id: 23, render: () => <ChapterCover num="04" name="Habilidades" image={habilidadesImg} range="" /> },
-
-  // 24 — Skills
+    // 15 — Markdown
   {
-    id: 24,
+    id: 15,
+    render: () => (
+      <SlideShell chapter="CONTEXTO">
+        <Label>O formato preferido das IAs</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Prompts <Underline>reutilizáveis</Underline>.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
+          Através de arquivo de instruções na forma de texto simples é possível especificar, descrever experiências, processos e conhecimentos reutilizáveis.
+        </div>
+        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333", marginTop: 80 }}>
+          Tá, mas como faço isso no ChatGPT/Gemini?
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 24 — Cover Habilidades
+  { id: 24, render: () => <ChapterCover num="04" name="Habilidades" image={habilidadesImg} range="" /> },
+
+  // 25 — Skills
+  {
+    id: 25,
     render: () => (
       <SlideShell chapter="HABILIDADES">
         <Label>Do prompt à execução</Label>
@@ -575,9 +624,9 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 25 — Exemplos skills
+  // 26 — Exemplos skills
   {
-    id: 25,
+    id: 26,
     render: () => (
       <SlideShell chapter="HABILIDADES">
         <Label>O que já é possível automatizar</Label>
@@ -590,8 +639,11 @@ const SLIDES: Slide[] = [
             { n: "Crédito", t: "Sumário de proposta com pontos de atenção" },
             { n: "Atendimento", t: "Resposta padrão de e-mail com tom da marca" },
             { n: "Compliance", t: "Revisão de contrato contra política interna" },
-            { n: "Humanizer", t: "Especialista em remover marcas de escrita por IA - <a href='https://www.skills.sh/mackswendhell/humanizer-pt-br/humanizer-pt-br'>Acessar link</a>" },
-            { n: "Book-to-Skill", t: "Transforme livro técnico em skill - <a href='https://github.com/virgiliojr94/book-to-skill'>Acessar link</a>" },
+            { n: "Humanizer", t: "Especialista em remover marcas de escrita por IA - <a href='https://www.skills.sh/mackswendhell/humanizer-pt-br/humanizer-pt-br ' target='_blank'>Acessar link</a>" },
+            { n: "Book-to-Skill", t: "Transforme livro técnico em skill - <a href='https://github.com/virgiliojr94/book-to-skill' target='_blank'>Acessar link</a>" },
+            { n: "html-to-png", t: "Transforme HTML em imagem PNG - <a href='/html-to-image.md' target='_blank'>Acessar link</a>" },
+            { n: "Video-to-Skill", t: "Transforme vídeo do YouTube em skill - <a href='https://gemini.google.com/' target='_blank'>Acessar link</a>" },
+            { n: "Histórico de prompts", t: "Prompts usados, modelos e custos estimados - <a href='/consumo.md' target='_blank'>Acessar link</a>" },
           ].map((s) => (
             <div key={s.n} style={{ borderLeft: "4px solid #ff6b00", paddingLeft: 20 }}>
               <div className="slide-label" style={{ color: "#111" }}>{s.n}</div>
@@ -605,12 +657,12 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 26 — Cover Ação
-  { id: 26, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
+  // 27 — Cover Ação
+  { id: 27, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
 
-  // 27 — Juntando tudo
+  // 28 — Juntando tudo
   {
-    id: 27,
+    id: 28,
     render: () => (
       <SlideShell chapter="AÇÃO">
         <Label>Exercício final · Mão na massa</Label>
@@ -621,21 +673,21 @@ const SLIDES: Slide[] = [
           Escolha algo que você faz toda semana transforme uma <Underline>Skill</Underline>.<br />
           Pode ser, por exemplo:
           <ul className="list-disc list-inside pl-6">
-            <li>Revisar um Pull Request.</li>
+            <li>Gerar Pull Request mais detalhada. <a href='/pr.md' target='_blank'>Exemplo</a></li>
+            <li>Criar User Stories. <a href='/userstory.md' target='_blank'>Exemplo</a></li>
             <li>Escrever casos de teste.</li>
-            <li>Criar User Stories.</li>
-            <li>Gerar documentação.</li>
+            <li>Escrever teste unitário.</li>
+            <li>Gerar documentação do projeto, caso não tenha.</li>
             <li>Escrever consultas SQL.</li>
             <li>Analisar logs.</li>
-            <li>Investigar bugs.</li>
           </ul>
         </div>
       </SlideShell>
     ),
   },
-  // 28 — Encerramento meme
+  // 29 — Encerramento meme
   {
-    id: 28,
+    id: 30,
     render: () => (
       <div className="slide-content flex items-center justify-center">
         <img
@@ -646,9 +698,9 @@ const SLIDES: Slide[] = [
       </div>
     ),
   },
-  // 29 — Agradecimento
+  // 30 — Agradecimento
   {
-    id: 29,
+    id: 31,
     render: () => (
       <div className="slide-content flex flex-col items-center justify-center text-center px-[200px]">
         <div className="slide-statement mb-12" style={{ maxWidth: 1400, fontSize: 42, color: "#444" }}>
@@ -765,16 +817,6 @@ function Presentation() {
           aria-label="Próximo"
         >
           →
-        </button>
-        <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.2)" }} />
-        <button
-          onClick={() => {
-            if (document.fullscreenElement) document.exitFullscreen();
-            else document.documentElement.requestFullscreen();
-          }}
-          className="px-3 py-1 text-xs font-medium hover:opacity-70"
-        >
-          Tela cheia (F)
         </button>
       </div>
     </div>
