@@ -1199,11 +1199,7 @@ const SLIDES: Slide[] = [
     ),
   },
   // 12 — Cover Conhecimento
-<<<<<<< HEAD
   { id: 20, render: () => <ChapterCover num="02" name="Conhecimento" image={conhecimentoImg} range="" /> },
-=======
-  { id: 12, render: () => <ChapterCover num="02" name="Conhecimento extra" image={conhecimentoImg} range="" /> },
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
   // 13 — Assistentes web
   {
     id: 21,
@@ -1435,11 +1431,7 @@ const SLIDES: Slide[] = [
   },
   // 22 — Cadeia de pensamento
   {
-<<<<<<< HEAD
     id: 30,
-=======
-    id: 23,
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 3/4 · Mão na massa</Label>
@@ -1459,11 +1451,7 @@ const SLIDES: Slide[] = [
   },
   // 23 — Iteração
   {
-<<<<<<< HEAD
     id: 31,
-=======
-    id: 24,
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 4/4 · Mão na massa</Label>
@@ -1480,11 +1468,7 @@ const SLIDES: Slide[] = [
   },
     // 15 — Markdown
   {
-<<<<<<< HEAD
     id: 32,
-=======
-    id: 25,
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>O formato preferido das IAs</Label>
@@ -1501,19 +1485,11 @@ const SLIDES: Slide[] = [
     ),
   },
   // 24 — Cover Habilidades
-<<<<<<< HEAD
   { id: 33, render: () => <ChapterCover num="04" name="Habilidades" image={habilidadesImg} range="" /> },
 
   // 25 — Skills
   {
     id: 34,
-=======
-  { id: 26, render: () => <ChapterCover num="04" name="Habilidades" image={habilidadesImg} range="" /> },
-
-  // 25 — Skills
-  {
-    id: 27,
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
     render: () => (
       <SlideShell chapter="HABILIDADES">
         <Label>Do prompt à execução</Label>
@@ -1528,11 +1504,7 @@ const SLIDES: Slide[] = [
   },
   // 26 — Exemplos skills
   {
-<<<<<<< HEAD
     id: 35,
-=======
-    id: 28,
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
     render: () => (
       <SlideShell chapter="HABILIDADES">
         <Label>O que já é possível automatizar</Label>
@@ -1564,7 +1536,6 @@ const SLIDES: Slide[] = [
     ),
   },
   // 27 — Cover Ação
-<<<<<<< HEAD
   { id: 36, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
 
   // 27.1 — Anatomia Estrutural de um Agente
@@ -1673,13 +1644,6 @@ const SLIDES: Slide[] = [
   // 28 — Juntando tudo
   {
     id: 38,
-=======
-  { id: 29, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
-
-  // 28 — Juntando tudo
-  {
-    id: 30,
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
     render: () => (
       <SlideShell chapter="AÇÃO">
         <Label>Exercício final · Mão na massa</Label>
@@ -1704,11 +1668,7 @@ const SLIDES: Slide[] = [
   },
   // 29 — Encerramento meme
   {
-<<<<<<< HEAD
     id: 39,
-=======
-    id: 31,
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
     render: () => (
       <div className="slide-content flex items-center justify-center">
         <img
@@ -1721,11 +1681,7 @@ const SLIDES: Slide[] = [
   },
   // 30 — Agradecimento
   {
-<<<<<<< HEAD
     id: 40,
-=======
-    id: 32,
->>>>>>> 46accc778dc0b63f4bd3a7c8a8770decce4ca610
     render: () => (
       <div className="slide-content flex flex-col items-center justify-center text-center px-50">
         <div className="slide-statement mb-12" style={{ maxWidth: 1400, fontSize: 42, color: "#444" }}>
