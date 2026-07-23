@@ -1,0 +1,46 @@
+* [33m97d3085[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m merge conhecimento alteração
+*   [33m546cffe[m Merge branch 'main' of https://github.com/gilcrespo/ia-curso
+[32m|[m[33m\[m  
+[32m|[m *   [33mfd496aa[m Merge branch 'main' of https://github.com/gilcrespo/ia-curso
+[32m|[m [34m|[m[35m\[m  
+[32m|[m [34m|[m *   [33mb508d12[m Merge pull request #1 from emanuelsantoz/main
+[32m|[m [34m|[m [36m|[m[1;31m\[m  
+[32m|[m * [36m|[m [1;31m|[m [33m3c57a93[m wip: refina visual dos slides de skill
+[32m|[m [36m|[m[36m/[m [1;31m/[m  
+* [36m|[m [1;31m/[m [33m6f851a0[m Alterações finais dia 23
+[1;31m|[m [36m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[36m|[m   
+* [36m|[m [33m5f9fd23[m Merge projeto LLM + Apresentação conecta
+* [36m|[m [33mf5a1ff4[m Atualização de slides
+[1;32m|[m[36m\[m[36m|[m 
+[1;32m|[m * [33m46accc7[m proj
+[1;32m|[m * [33m6003b03[m teste: commit vazio para validar fluxo
+[1;32m|[m * [33m306c2d6[m imagem + resumo
+* [1;33m|[m [33m21a6ab0[m Atualização de slides
+* [1;33m|[m [33mdebd04d[m Acertando imagens
+* [1;33m|[m [33mb2bbd5d[m Atualização e criação de um .md
+* [1;33m|[m [33m1786a8e[m atualização
+[1;33m|[m[1;33m/[m  
+* [33m5100f44[m mudancas
+* [33mf342f91[m part
+* [33md7fb6ad[m labels
+* [33m26690ce[m simple
+* [33mad8b5de[m final vers
+* [33m35ae842[m conti
+* [33mbf87507[m v0
+*   [33m87c31fb[m Adicionou slide de obrigado
+[1;34m|[m[1;35m\[m  
+[1;34m|[m * [33m00ebc27[m Changes
+[1;34m|[m * [33meae802e[m Changes
+[1;34m|[m[1;34m/[m  
+*   [33ma2fd640[m Criou apresentação em slides
+[1;36m|[m[31m\[m  
+[1;36m|[m * [33m9160aa7[m Changes
+[1;36m|[m * [33me4a0cdf[m Changes
+[1;36m|[m * [33m1802626[m Changes
+[1;36m|[m * [33mf4adc14[m Changes
+[1;36m|[m * [33m4d03e02[m Changes
+[1;36m|[m * [33m12c00ea[m Changes
+[1;36m|[m * [33mf15e2e0[m Changes
+[1;36m|[m[1;36m/[m  
+* [33me85df5c[m template: tanstack_start_ts_current-6f0053eadbb1

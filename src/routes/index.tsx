@@ -968,12 +968,12 @@ const SLIDES: Slide[] = [
 
               {/* Pontos */}
               {[
-                { name: "Rei",    x: 22, y: 30, big: true },
+                { name: "Rei", x: 22, y: 30, big: true },
                 { name: "Rainha", x: 78, y: 30, big: true },
-                { name: "Homem",  x: 22, y: 70 },
+                { name: "Homem", x: 22, y: 70 },
                 { name: "Mulher", x: 78, y: 70 },
-                { name: "Cão",    x: 35, y: 85, muted: true },
-                { name: "Gato",   x: 45, y: 88, muted: true },
+                { name: "Cão", x: 35, y: 85, muted: true },
+                { name: "Gato", x: 45, y: 88, muted: true },
               ].map((p) => (
                 <div
                   key={p.name}
@@ -1601,8 +1601,8 @@ const SLIDES: Slide[] = [
             }}
           >
             <strong>Nota arquitetural:</strong> o mesmo LLM, envolto em um Harness diferente, produzirá resultados comportamentais completamente distintos.
-        </div>
-      </RevealIf>
+          </div>
+        </RevealIf>
       </SlideShell>
     ),
   },
@@ -1685,29 +1685,12 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 11 — Custos imagem
-  {
-    id: 19,
-    render: () => (
-      <SlideShell chapter="CÉREBRO">
-        <div className="flex items-center justify-center h-full w-full">
-          <img
-            src={custosImg}
-            alt="Custos"
-            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
-          />
-        </div>
-      </SlideShell>
-    ),
-  },
-  // 12 — Cover Conhecimento
-  { id: 20, render: () => <ChapterCover num="02" name="Conhecimento" image={conhecimentoImg} range="" /> },
   // 13 — Topologia de Camadas
   {
     id: 21,
     steps: 5,
     render: () => (
-      <SlideShell chapter="CONHECIMENTO">
+      <SlideShell chapter="CÉREBRO">
         <Label>Estrutura conceitual da IA</Label>
         <div className="slide-title mb-8" style={{ maxWidth: 1500 }}>
           Topologia de <Underline>camadas</Underline>.
@@ -1726,6 +1709,26 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
+  // 12 — Cover Conhecimento
+  { id: 20, render: () => <ChapterCover num="02" name="Conhecimento" image={conhecimentoImg} range="" /> },
+  // 13 — Assistentes web
+  {
+    id: 21,
+    render: () => (
+      <SlideShell chapter="CONHECIMENTO">
+        <Label>Onde conversamos com a IA</Label>
+        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+          <Underline>Assistentes web</Underline> por chat.
+        </div>
+        <div className="grid gap-8" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+          <Card num="OpenAI" title="ChatGPT" body="O mais conhecido. Forte em texto, imagem e voz." />
+          <Card num="Google" title="Gemini" body="Integrado ao Workspace, YouTube e Google Search." />
+          <Card num="Anthropic" title="Claude" body="Ótimo para textos longos e análise de documentos." />
+        </div>
+      </SlideShell>
+    ),
+  },
+  
   // 14 — Projeto no ChatGPT
   {
     id: 22,
@@ -1755,17 +1758,17 @@ const SLIDES: Slide[] = [
           Por que usar?
         </div>
         <div className="grid gap-8 mt-10" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-          <Card 
-            title="Respostas específicas" 
-            body="Respostas extraídas <strong>exclusivamente dos seus arquivos</strong> (PDFs, Google Docs, Links, Youtube)." 
+          <Card
+            title="Respostas específicas"
+            body="Respostas extraídas <strong>exclusivamente dos seus arquivos</strong> (PDFs, Google Docs, Links, Youtube)."
           />
-          <Card 
-            title="Resumos Instantâneos" 
-            body="Criação automática de <strong>guias de estudo</strong>, FAQs, <strong>cronogramas e briefing</strong> de documentos extensos." 
+          <Card
+            title="Resumos Instantâneos"
+            body="Criação automática de <strong>guias de estudo</strong>, FAQs, <strong>cronogramas e briefing</strong> de documentos extensos."
           />
-          <Card 
-            title="Resumo em áudio" 
-            body="Transforma seus textos em um <strong>podcast interativo</strong> gravado por dois apresentadores virtuais." 
+          <Card
+            title="Resumo em áudio"
+            body="Transforma seus textos em um <strong>podcast interativo</strong> gravado por dois apresentadores virtuais."
           />
         </div>
       </SlideShell>
@@ -1781,13 +1784,13 @@ const SLIDES: Slide[] = [
           <Underline>Aplicações</Underline> no Dia a Dia.
         </div>
         <div className="grid gap-8" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
-          <Card 
-            title="Estudantes e Pesquisadores" 
-            body="Sintetize dezenas de artigos científicos, crie resumos para provas e encontre citações exatas em segundos." 
+          <Card
+            title="Estudantes e Pesquisadores"
+            body="Sintetize dezenas de artigos científicos, crie resumos para provas e encontre citações exatas em segundos."
           />
-          <Card 
-            title="Profissionais e Gestores" 
-            body="Analise relatórios de mercado, atas de reunião e contratos sem perder tempo lendo centenas de páginas." 
+          <Card
+            title="Profissionais e Gestores"
+            body="Analise relatórios de mercado, atas de reunião e contratos sem perder tempo lendo centenas de páginas."
           />
         </div>
       </SlideShell>
@@ -1801,7 +1804,7 @@ const SLIDES: Slide[] = [
         <div className="slide-hero mb-10" style={{ fontSize: 100, lineHeight: 1 }}>
           Resumo e <Underline>Spoiler</Underline>
         </div>
-        
+
         <div className="grid grid-cols-2 gap-32 w-full">
           {/* Dia 1 */}
           <div className="flex flex-col gap-10 p-10 bg-slate-100">
@@ -1871,12 +1874,12 @@ const SLIDES: Slide[] = [
         </div>
         <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
           {[
-            { n: "01", t: "Personificação (Role)", d: "Quem a IA deve parecer ser.", letter:"R" },
-            { n: "02", t: "Tarefa, Objetivo", d: "O que você quer alcançar.", letter:"T" },
-            { n: "03", t: "Contexto adicional", d: "Especificações, arquivos, material, restrições, exemplos, público-alvo", letter:"C" },
-            { n: "04", t: "Formato", d: "Formato esperado.", letter:"F" },
+            { n: "01", t: "Personificação (Role)", d: "Quem a IA deve parecer ser.", letter: "R" },
+            { n: "02", t: "Tarefa, Objetivo", d: "O que você quer alcançar.", letter: "T" },
+            { n: "03", t: "Contexto adicional", d: "Especificações, arquivos, material, restrições, exemplos, público-alvo", letter: "C" },
+            { n: "04", t: "Formato", d: "Formato esperado.", letter: "F" },
           ].map((x, i) => (
-            <div key={x.n}> <br/>
+            <div key={x.n}> <br />
               <div style={{ fontSize: 84, fontWeight: 700, marginTop: 10, borderBottom: `6px solid #111`, paddingTop: 20, color: x.letter == "C" ? "#ff6b00" : "#111" }}>{x.letter}</div>
               <div style={{ fontSize: 34, fontWeight: 700, marginTop: 10 }}>{x.t}</div>
               <div className="slide-body" style={{ color: "#555", marginTop: 8 }}>{x.d}</div>
@@ -1975,7 +1978,7 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-    // 15 — Markdown
+  // 15 — Markdown
   {
     id: 32,
     render: () => (
@@ -2182,109 +2185,6 @@ const SLIDES: Slide[] = [
   },
   // 27 — Cover Ação
   { id: 36, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
-
-  // 27.1 — Anatomia Estrutural de um Agente
-  {
-    id: 37,
-    render: () => (
-      <SlideShell chapter="AÇÃO">
-        <Label>Recapitulando</Label>
-        <div className="slide-title mb-12" style={{ maxWidth: 1500 }}>
-          A anatomia estrutural de um <Underline>agente</Underline>.
-        </div>
-        <div
-          className="grid items-stretch"
-          style={{
-            gridTemplateColumns: "1fr auto 1fr auto 1fr auto 1fr",
-            gap: 16,
-            alignItems: "center",
-            marginTop: 30,
-          }}
-        >
-          <div
-            style={{
-              border: "2px solid #111",
-              padding: "32px 28px",
-              minHeight: 280,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div className="slide-label" style={{ color: "#111" }}>[ CÉREBRO ]</div>
-            <div style={{ fontSize: 30, fontWeight: 700, marginTop: 8 }}>LLM (Claude)</div>
-            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
-              A inteligência bruta, o raciocínio probabilístico e a capacidade de interpretação.
-            </div>
-          </div>
-          <div style={{ fontSize: 64, fontWeight: 700, color: "#3b82f6", textAlign: "center" }}>+</div>
-          <div
-            style={{
-              border: "2px solid #111",
-              padding: "32px 28px",
-              minHeight: 280,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div className="slide-label" style={{ color: "#111" }}>[ FERRAMENTAS ]</div>
-            <div style={{ fontSize: 30, fontWeight: 700, marginTop: 8 }}>MCP Servers / APIs / Web</div>
-            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
-              Os "braços" executivos que permitem manipular arquivos e dados externos.
-            </div>
-          </div>
-          <div style={{ fontSize: 64, fontWeight: 700, color: "#3b82f6", textAlign: "center" }}>+</div>
-          <div
-            style={{
-              border: "2px solid #111",
-              padding: "32px 28px",
-              minHeight: 280,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div className="slide-label" style={{ color: "#111" }}>[ LOOP REACT ]</div>
-            <div style={{ fontSize: 30, fontWeight: 700, marginTop: 8 }}>Pense → Aja → Observe</div>
-            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
-              A autonomia iterativa para buscar um objetivo até sua conclusão.
-            </div>
-          </div>
-          <div style={{ fontSize: 64, fontWeight: 700, color: "#16a34a", textAlign: "center" }}>=</div>
-          <div
-            style={{
-              border: "4px solid #16a34a",
-              background: "#f0fdf4",
-              padding: "32px 28px",
-              minHeight: 280,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div className="slide-label" style={{ color: "#16a34a" }}>[ AGENTE AUTÔNOMO ]</div>
-            <div style={{ fontSize: 30, fontWeight: 700, marginTop: 8 }}>Entidade capaz de agir</div>
-            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
-              Recebe um objetivo, traça um plano, utiliza ferramentas e corrige a própria rota de forma independente.
-            </div>
-          </div>
-        </div>
-        <div
-          className="slide-statement mt-12"
-          style={{
-            maxWidth: 1500,
-            padding: "20px 28px",
-            border: "2px solid #111",
-            background: "#fafafa",
-            color: "#333",
-          }}
-        >
-          <strong>Nota arquitetural:</strong> sem ferramentas ou sem o loop iterativo, você tem apenas um modelo de linguagem brilhante preso em seu próprio ecossistema.
-        </div>
-      </SlideShell>
-    ),
-  },
 
   // 29 — Exercício final
   {
