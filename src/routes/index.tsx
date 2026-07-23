@@ -2001,42 +2001,178 @@ const SLIDES: Slide[] = [
     id: 34,
     render: () => (
       <SlideShell chapter="HABILIDADES">
-        <Label>Do prompt à execução</Label>
+        <Label>Do contexto ao reaproveitamento</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          Habilidades <Underline>customizadas</Underline>.
+          Skill é <Underline>execução reutilizável</Underline>.
         </div>
-        <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Skills são procedimentos, instruções, comportamentos que a IA aprende uma vez e as executam sempre da mesma forma.
+        <div className="slide-statement" style={{ maxWidth: 1450, color: "#333" }}>
+          O pedido pode ser curto porque a skill ja carrega contexto, criterio e formato.
+        </div>
+        <div className="skill-demo">
+          <div className="skill-demo-stage">
+            <div className="skill-demo-doc">
+              <div className="skill-demo-doc-header">skill.md</div>
+              <div className="skill-demo-doc-line">
+                <span># papel</span>
+                <span>cobranca amigavel B2B</span>
+              </div>
+              <div className="skill-demo-doc-line">
+                <span># objetivo</span>
+                <span>cobrar sem soar agressivo</span>
+              </div>
+              <div className="skill-demo-doc-line">
+                <span># criterios</span>
+                <span>educado, claro, com prazo</span>
+              </div>
+              <div className="skill-demo-doc-line">
+                <span># formato</span>
+                <span>assunto + corpo + CTA</span>
+              </div>
+            </div>
+            <div className="skill-demo-chat">
+              <div className="skill-demo-chat-header">
+                <span>ChatGPT</span>
+                <span className="skill-demo-chat-pill">skill ativa</span>
+              </div>
+              <div className="skill-demo-user">
+                Gere um e-mail curto cobrando a fatura em atraso.
+              </div>
+              <div className="skill-demo-assistant">
+                <div className="skill-demo-assistant-title">Resposta guiada pela skill</div>
+                <div className="skill-demo-assistant-line"><strong>Assunto:</strong> Regularizacao da fatura pendente</div>
+                <div className="skill-demo-assistant-line"><strong>Tom:</strong> cordial, objetivo e sem confronto</div>
+                <div className="skill-demo-assistant-line"><strong>CTA:</strong> solicitar confirmacao do pagamento ate amanha</div>
+              </div>
+            </div>
+          </div>
+          <div className="skill-demo-copy">
+            <div className="skill-demo-point">
+              <div className="slide-label" style={{ color: "#111" }}>Prompt curto</div>
+              <div className="skill-demo-point-text">Quem usa nao precisa reexplicar tudo.</div>
+            </div>
+            <div className="skill-demo-point">
+              <div className="slide-label" style={{ color: "#111" }}>Contexto salvo</div>
+              <div className="skill-demo-point-text">A skill leva junto papel, regra e formato.</div>
+            </div>
+            <div className="skill-demo-point">
+              <div className="slide-label" style={{ color: "#111" }}>Resposta consistente</div>
+              <div className="skill-demo-point-text">A saida segue um padrao reutilizavel.</div>
+            </div>
+          </div>
         </div>
       </SlideShell>
     ),
   },
-  // 26 — Exemplos skills
+  // 26 — Da conversa ao método
   {
     id: 35,
     render: () => (
       <SlideShell chapter="HABILIDADES">
-        <Label>O que já é possível automatizar</Label>
-        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
-          Exemplos de <Underline>skills</Underline>.
+        <Label>Da cabeça ao texto</Label>
+        <div className="slide-title mb-8" style={{ maxWidth: 1500, fontSize: 76, lineHeight: 0.98 }}>
+          Transformando experiência em <Underline>skill</Underline>.
         </div>
-        <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+        <div className="slide-statement" style={{ maxWidth: 1250, color: "#333", fontSize: 38, lineHeight: 1.12 }}>
+          Uma skill é um pedaço do seu jeito de pensar, escrito em texto para a IA repetir com padrão.
+        </div>
+        <div className="skill-metaphor">
+          <div className="skill-brain-panel">
+            <div className="slide-label" style={{ color: "#111" }}>No humano</div>
+            <div className="brain-shell">
+              <div className="brain-orbit brain-orbit-1" />
+              <div className="brain-orbit brain-orbit-2" />
+              <div className="brain-orbit brain-orbit-3" />
+              <div className="brain-chip brain-chip-1">Tom</div>
+              <div className="brain-chip brain-chip-2">Critérios</div>
+              <div className="brain-chip brain-chip-3">Passos</div>
+              <div className="brain-chip brain-chip-4">Exemplos</div>
+              <div className="brain-core">
+                experiência<br />humana
+              </div>
+            </div>
+            <div className="slide-caption" style={{ maxWidth: 360, marginTop: 14, fontSize: 20 }}>
+              Uma forma de pensar e executar que hoje ainda está espalhada na sua cabeça.
+            </div>
+          </div>
+          <div className="skill-transfer">
+            <div className="skill-transfer-line" />
+            <div className="slide-label" style={{ color: "#111" }}>Extrair e organizar</div>
+            <div className="skill-transfer-copy">
+              transformar jeito de pensar em instrução reutilizável
+            </div>
+          </div>
+          <div className="skill-box-panel">
+            <div className="slide-label" style={{ color: "#111" }}>Na caixinha</div>
+            <div className="skill-file-card">
+              <div className="skill-file-header">skill.md</div>
+              <div className="skill-file-line">
+                <span># papel</span>
+                <span>especialista...</span>
+              </div>
+              <div className="skill-file-line">
+                <span># objetivo</span>
+                <span>o que fazer</span>
+              </div>
+              <div className="skill-file-line">
+                <span># passos</span>
+                <span>como executar</span>
+              </div>
+              <div className="skill-file-line">
+                <span># critérios</span>
+                <span>o que validar</span>
+              </div>
+              <div className="skill-file-line">
+                <span># formato</span>
+                <span>como responder</span>
+              </div>
+            </div>
+            <div className="slide-caption" style={{ maxWidth: 360, marginTop: 14, fontSize: 20 }}>
+              A IA não improvisa do zero. Ela reutiliza o padrão salvo em texto.
+            </div>
+          </div>
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 27 — Exemplos por público
+  {
+    id: 29,
+    render: () => (
+      <SlideShell chapter="HABILIDADES">
+        <Label>Mesma lógica, mundos diferentes</Label>
+        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+          Uma lógica. <Underline>Quatro mundos</Underline>.
+        </div>
+        <div className="audience-grid">
           {[
-            { n: "Administrativo", t: "Ata resumida a partir da gravação da reunião" },
-            { n: "Crédito", t: "Sumário de proposta com pontos de atenção" },
-            { n: "Atendimento", t: "Resposta padrão de e-mail com tom da marca" },
-            { n: "Compliance", t: "Revisão de contrato contra política interna" },
-            { n: "Humanizer", t: "Especialista em remover marcas de escrita por IA - <a href='https://www.skills.sh/mackswendhell/humanizer-pt-br/humanizer-pt-br ' target='_blank'>Acessar link</a>" },
-            { n: "Book-to-Skill", t: "Transforme livro técnico em skill - <a href='https://github.com/virgiliojr94/book-to-skill' target='_blank'>Acessar link</a>" },
-            { n: "html-to-png", t: "Transforme HTML em imagem PNG - <a href='/html-to-image.md' target='_blank'>Acessar link</a>" },
-            { n: "Video-to-Skill", t: "Transforme vídeo do YouTube em skill - <a href='https://gemini.google.com/' target='_blank'>Acessar link</a>" },
-            { n: "Histórico de prompts", t: "Prompts usados, modelos e custos estimados - <a href='/consumo.md' target='_blank'>Acessar link</a>" },
-          ].map((s) => (
-            <div key={s.n} style={{ borderLeft: "4px solid #ff6b00", paddingLeft: 20 }}>
-              <div className="slide-label" style={{ color: "#111" }}>{s.n}</div>
+            {
+              n: "Desenvolvimento",
+              t: "PR, user story e análise técnica.",
+              d: "Transforme uma rotina recorrente em método reutilizável. <a href='/pr.md' target='_blank'>Ver exemplo</a>",
+            },
+            {
+              n: "Marketing",
+              t: "Briefing, campanha e tom de marca.",
+              d: "A IA passa a repetir o mesmo raciocínio criativo com consistência.",
+            },
+            {
+              n: "Vídeo",
+              t: "Roteiro, cortes e descrição final.",
+              d: "Um bom fluxo reduz retrabalho e acelera a produção.",
+            },
+            {
+              n: "Operação",
+              t: "Resumo, resposta e histórico útil.",
+              d: "Padronize tarefas de toda semana. <a href='/consumo.md' target='_blank'>Ver exemplo</a>",
+            },
+          ].map((world, i) => (
+            <div key={world.n} className="audience-card" style={{ animationDelay: `${i * 0.6}s` }}>
+              <div className="slide-label" style={{ color: "#111" }}>{world.n}</div>
+              <div className="skill-step-title" style={{ marginTop: 14 }}>{world.t}</div>
               <div
-                style={{ fontSize: 28, fontWeight: 600, marginTop: 10, lineHeight: 1.25 }}
-                dangerouslySetInnerHTML={{ __html: s.t }}
+                className="skill-step-body"
+                style={{ marginTop: 18 }}
+                dangerouslySetInnerHTML={{ __html: world.d }}
               />
             </div>
           ))}
@@ -2150,32 +2286,48 @@ const SLIDES: Slide[] = [
     ),
   },
 
-  // 28 — Juntando tudo
+  // 29 — Exercício final
   {
     id: 38,
     render: () => (
       <SlideShell chapter="AÇÃO">
         <Label>Exercício final · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          <Underline>Juntando tudo</Underline>.
+          O que merece virar <Underline>método</Underline>?
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
-          Escolha algo que você faz toda semana transforme uma <Underline>Skill</Underline>.<br />
-          Pode ser, por exemplo:
-          <ul className="list-disc list-inside pl-6">
-            <li>Gerar Pull Request mais detalhada. <a href='/pr.md' target='_blank'>Exemplo</a></li>
-            <li>Criar User Stories. <a href='/userstory.md' target='_blank'>Exemplo</a></li>
-            <li>Escrever casos de teste.</li>
-            <li>Escrever teste unitário.</li>
-            <li>Gerar documentação do projeto, caso não tenha.</li>
-            <li>Escrever consultas SQL.</li>
-            <li>Analisar logs.</li>
-          </ul>
+          Se repete toda semana, custa mais do que parece.
+        </div>
+        <div className="action-grid">
+          {[
+            {
+              n: "01",
+              t: "Observe",
+              d: "Escolha algo que você vive reexplicando para a IA.",
+            },
+            {
+              n: "02",
+              t: "Estruture",
+              d: "Defina contexto, passos, restrições e formato esperado.",
+            },
+            {
+              n: "03",
+              t: "Reutilize",
+              d: "Teste, refine e salve como skill para o próximo caso.",
+            },
+          ].map((item, i) => (
+            <div key={item.n} className="action-card" style={{ animationDelay: `${i * 0.45}s` }}>
+              <div className="slide-label" style={{ color: "#111" }}>{item.n}</div>
+              <div className="skill-step-title" style={{ marginTop: 14 }}>{item.t}</div>
+              <div className="skill-step-body" style={{ marginTop: 18 }}>{item.d}</div>
+              <div className="action-card-bar" style={{ animationDelay: `${0.2 + i * 0.45}s` }} />
+            </div>
+          ))}
         </div>
       </SlideShell>
     ),
   },
-  // 29 — Encerramento meme
+  // 30 — Encerramento meme
   {
     id: 39,
     render: () => (
@@ -2188,7 +2340,7 @@ const SLIDES: Slide[] = [
       </div>
     ),
   },
-  // 30 — Agradecimento
+  // 31 — Agradecimento
   {
     id: 40,
     render: () => (
@@ -2214,12 +2366,7 @@ const SLIDES: Slide[] = [
 /* ---------- Presentation shell ---------- */
 
 function Presentation() {
-  const [index, setIndex] = useState(() => {
-    if (typeof window === "undefined") return 0;
-    const p = new URLSearchParams(window.location.search).get("slide");
-    const n = p ? parseInt(p, 10) : 1;
-    return Math.min(Math.max((isNaN(n) ? 1 : n) - 1, 0), SLIDES.length - 1);
-  });
+  const [index, setIndex] = useState(0);
 
   // `step` controla quantos elementos de um slide já foram revelados.
   // É resetado toda vez que o slide atual muda.
@@ -2269,6 +2416,13 @@ function Presentation() {
     url.searchParams.set("slide", String(clamped + 1));
     window.history.replaceState({}, "", url.toString());
   }, [index, step]);
+
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get("slide");
+    const n = p ? parseInt(p, 10) : 1;
+    const next = Math.min(Math.max((isNaN(n) ? 1 : n) - 1, 0), SLIDES.length - 1);
+    setIndex(next);
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
