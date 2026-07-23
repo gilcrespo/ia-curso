@@ -408,7 +408,7 @@ const SLIDES: Slide[] = [
     ),
   },
   // 12 — Cover Conhecimento
-  { id: 12, render: () => <ChapterCover num="02" name="Conhecimento" image={conhecimentoImg} range="" /> },
+  { id: 12, render: () => <ChapterCover num="02" name="Conhecimento extra" image={conhecimentoImg} range="" /> },
   // 13 — Assistentes web
   {
     id: 13,
@@ -452,6 +452,56 @@ const SLIDES: Slide[] = [
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
           Suba manuais, atas, resoluções do Bacen e vídeos do YouTube. A IA responde citando exatamente o trecho de origem.
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 16 — Encerramento Dia 1 & Spoiler Dia 2
+  {
+    id: 16,
+    render: () => (
+      <SlideShell>
+        <div className="slide-hero mb-10" style={{ fontSize: 100, lineHeight: 1 }}>
+          Resumo e <Underline>Spoiler</Underline>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-32 w-full">
+          {/* Dia 1 */}
+          <div className="flex flex-col gap-10 p-10 bg-slate-100">
+            <div className="slide-label text-accent" style={{ fontSize: 24, letterSpacing: "0.2em" }}>O que aprendemos hoje</div>
+            <div className="flex flex-col gap-6">
+              {[
+                { p: "Emanuel", t: "LLMs, modelos e Tokens" },
+                { p: "Tayna", t: "Evolução da IA" },
+                { p: "Gil", t: "Enriquecendo contexto" },
+              ].map(item => (
+                <div key={item.p} className="flex flex-col">
+                  <span style={{ fontSize: 45, fontWeight: 800, color: "#111" }}>{item.t}</span>
+                  <span style={{ fontSize: 30, color: "#9B9B9B", marginTop: -5 }}>{item.p}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dia 2 */}
+          <div className="flex flex-col gap-10 bg-orange-200 p-10">
+            <div className="slide-label text-accent" style={{ fontSize: 24, letterSpacing: "0.2em" }}> Spoiler para próximo encontro</div>
+            <div className="flex flex-col gap-6">
+              {[
+                { p: "Gil", t: "Prompt Engineering" },
+                { p: "Israel", t: "Criação de Skills" },
+              ].map(item => (
+                <div key={item.p} className="flex flex-col">
+                  <span style={{ fontSize: 45, fontWeight: 800, color: "#111" }}>{item.t}</span>
+                  <span style={{ fontSize: 30, color: "darkorange", marginTop: -5 }}>{item.p}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12" style={{ fontSize: 32, color: "#111", fontWeight: 600 }}>
+          Dúvidas? Nos vemos semana que vem (dia 30).
         </div>
       </SlideShell>
     ),
@@ -553,7 +603,7 @@ const SLIDES: Slide[] = [
   },
   // 22 — Cadeia de pensamento
   {
-    id: 22,
+    id: 23,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 3/4 · Mão na massa</Label>
@@ -573,7 +623,7 @@ const SLIDES: Slide[] = [
   },
   // 23 — Iteração
   {
-    id: 23,
+    id: 24,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>Exercício 4/4 · Mão na massa</Label>
@@ -590,7 +640,7 @@ const SLIDES: Slide[] = [
   },
     // 15 — Markdown
   {
-    id: 15,
+    id: 25,
     render: () => (
       <SlideShell chapter="CONTEXTO">
         <Label>O formato preferido das IAs</Label>
@@ -607,11 +657,11 @@ const SLIDES: Slide[] = [
     ),
   },
   // 24 — Cover Habilidades
-  { id: 24, render: () => <ChapterCover num="04" name="Habilidades" image={habilidadesImg} range="" /> },
+  { id: 26, render: () => <ChapterCover num="04" name="Habilidades" image={habilidadesImg} range="" /> },
 
   // 25 — Skills
   {
-    id: 25,
+    id: 27,
     render: () => (
       <SlideShell chapter="HABILIDADES">
         <Label>Do prompt à execução</Label>
@@ -626,7 +676,7 @@ const SLIDES: Slide[] = [
   },
   // 26 — Exemplos skills
   {
-    id: 26,
+    id: 28,
     render: () => (
       <SlideShell chapter="HABILIDADES">
         <Label>O que já é possível automatizar</Label>
@@ -658,11 +708,11 @@ const SLIDES: Slide[] = [
     ),
   },
   // 27 — Cover Ação
-  { id: 27, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
+  { id: 29, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
 
   // 28 — Juntando tudo
   {
-    id: 28,
+    id: 30,
     render: () => (
       <SlideShell chapter="AÇÃO">
         <Label>Exercício final · Mão na massa</Label>
@@ -687,7 +737,7 @@ const SLIDES: Slide[] = [
   },
   // 29 — Encerramento meme
   {
-    id: 30,
+    id: 31,
     render: () => (
       <div className="slide-content flex items-center justify-center">
         <img
@@ -700,9 +750,9 @@ const SLIDES: Slide[] = [
   },
   // 30 — Agradecimento
   {
-    id: 31,
+    id: 32,
     render: () => (
-      <div className="slide-content flex flex-col items-center justify-center text-center px-[200px]">
+      <div className="slide-content flex flex-col items-center justify-center text-center px-50">
         <div className="slide-statement mb-12" style={{ maxWidth: 1400, fontSize: 42, color: "#444" }}>
           <strong>Ontem:</strong><br /> você apenas conversava com a IA. ("oi chat")
         </div>

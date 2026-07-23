@@ -1,0 +1,1 @@
+- Ao ser solicitado criação ou edição de slides, use o arquivo "/demoday.md" como referência visual.
