@@ -61,6 +61,7 @@ function SlideShell({
       style={onClick ? { cursor: "pointer" } : undefined}
     >
       {chapter && (
+<<<<<<< HEAD
         <div className="slide-chapter-header">
           <div
             className="slide-chapter-tag absolute flex items-center gap-4"
@@ -83,6 +84,35 @@ function SlideShell({
               />
             ))}
           </div>
+=======
+        <div
+          className="slide-chapter-tag absolute flex items-center gap-4"
+          style={{
+            top: 0,
+            left: 0,
+            right: 0,
+            padding: "50px 90px 30px 90px",
+            background: "linear-gradient(to bottom, #ffffff 60%, rgba(255,255,255,0))",
+            zIndex: 10,
+          }}
+        >
+          {Object.entries(CHAPTER_IMAGES).map(([name, img]) => (
+            <img
+              key={name}
+              src={img}
+              alt={name}
+              style={{
+                width: name === chapter ? 120 : 80,
+                height: name === chapter ? 120 : 80,
+                objectFit: "contain",
+                filter: name === chapter ? "none" : "grayscale(100%)",
+                border: name === chapter ? "4px solid #f97316" : "2px solid transparent",
+                borderRadius: "50%",
+                transition: "all 0.3s ease",
+              }}
+            />
+          ))}
+>>>>>>> 508bb57924fd72908c33e0bc9614cd3c8318fdee
         </div>
       )}
       <div
@@ -336,11 +366,20 @@ function Slide7() {
           ))}
         </div>
       </div>
-      <RevealIf stepIndex={1}>
-        <div style={{ marginTop: 50, display: "grid", gap: 20, gridTemplateColumns: "1fr" }}>
-          <img src="/imagem/imagem_full_slide3.png.png" alt="Evolução da IA 2023–2026" style={{ width: "100%", height: "auto", border: "2px solid #111", borderRadius: 8, background: "#fff" }} />
-        </div>
-      </RevealIf>
+      <div style={{ marginTop: 50, display: "grid", gap: 20, gridTemplateColumns: "repeat(4, 1fr)" }}>
+        {[
+          { src: "/imagem/imagem_1slide3.png", alt: "2023 — Multimodalidade", step: 1 },
+          { src: "/imagem/imagem_2slide3.png", alt: "2024 — Vídeo e tempo real", step: 2 },
+          { src: "/imagem/imagem_3slide3.png", alt: "2024–2025 — Raciocínio avançado", step: 3 },
+          { src: "/imagem/imagem_4slide3.png", alt: "2026 — Agentes autônomos", step: 4 },
+        ].map((img) => (
+          <RevealIf key={img.src} stepIndex={img.step}>
+            <div style={{ border: "2px solid #111", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+              <img src={img.src} alt={img.alt} style={{ width: "100%", height: 360, objectFit: "cover", display: "block" }} />
+            </div>
+          </RevealIf>
+        ))}
+      </div>
     </SlideShell>
   );
 }
@@ -416,43 +455,269 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 4 — Cover Cérebro
-  { id: 4, render: () => <ChapterCover num="01" name="Cérebro (LLM)" image={cerebroImg} range="" /> },
-  // 5.1 — Evolução timeline (Parte 1)
+  // 3.5 — Provocação inicial: O que é IA?
+  {
+    id: 7.5,
+    steps: 3,
+    render: () => (
+      <SlideShell>
+        <Label>Provocação inicial</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Afinal, o que é <Underline>IA</Underline>?
+        </div>
+        <div className="slide-statement mb-14" style={{ maxWidth: 1400, color: "#333" }}>
+          Antes de falarmos de tokens e redes neurais, precisamos alinhar o que entendemos por Inteligência Artificial.
+        </div>
+        <div className="grid gap-8 mb-12" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
+          <RevealIf stepIndex={1}>
+            <Card
+              num="Na ficção"
+              title="Robôs e superinteligências"
+              body="Robôs conscientes, máquinas com sentimentos e vontades próprias, superinteligências que dominam o mundo."
+            />
+          </RevealIf>
+          <RevealIf stepIndex={2}>
+            <Card
+              num="Na realidade"
+              title="Matemática e estatística"
+              body="Matemática, estatística e muita capacidade computacional para encontrar padrões em montanhas de dados."
+            />
+          </RevealIf>
+        </div>
+        <RevealIf stepIndex={3}>
+          <div
+            className="slide-statement"
+            style={{
+              maxWidth: 1500,
+              padding: "24px 32px",
+              border: "4px solid #ff6b00",
+              background: "#fff5ec",
+              color: "#111",
+              fontSize: 32,
+              fontWeight: 600,
+              lineHeight: 1.3,
+            }}
+          >
+            A IA moderna não "pensa" como nós. Ela <strong>calcula probabilidades</strong> de forma extremamente sofisticada.
+          </div>
+        </RevealIf>
+      </SlideShell>
+    ),
+  },
+  // 3.6 — Evolução timeline (Parte 1)
   {
     id: 5,
     steps: 4,
     render: () => <Slide5 />,
   },
-  // 5.2 — Evolução timeline (Parte 2)
+  // 3.7 — Evolução timeline (Parte 2)
   {
     id: 6,
     steps: 4,
     render: () => <Slide6 />,
   },
-  // 5.3 — Evolução timeline (Parte 3)
+  // 3.8 — Evolução timeline (Parte 3)
   {
     id: 7,
     steps: 4,
     render: () => <Slide7 />,
   },
-  // 6.1 — LLMs
+  // 4 — Cover Cérebro
+  { id: 4, render: () => <ChapterCover num="01" name="Cérebro (LLM)" image={cerebroImg} range="" /> },
+  // 5.1 — Como prever o futuro?
   {
-    id: 8,
+    id: 8.1,
+    steps: 4,
     render: () => (
       <SlideShell chapter="CÉREBRO">
-        <Label>O motor da IA generativa</Label>
+        <Label>Conceito Central</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          O que são <Underline>LLMs</Underline>?
+          Como prever o <Underline>futuro</Underline>?
         </div>
-        <div className="slide-statement mb-16" style={{ maxWidth: 1400, color: "#333" }}>
-          Large Language Models são modelos treinados em enormes volumes de texto para prever a próxima palavra, permitindo conversar, escrever e raciocinar.
+        <div className="slide-statement mb-14" style={{ maxWidth: 1400, color: "#333" }}>
+          A mágica de um LLM se resume a prever a próxima palavra. Mas como ele sabe qual escolher?
         </div>
+        <RevealIf stepIndex={1}>
+          <div
+            className="slide-statement mb-10"
+            style={{
+              maxWidth: 1500,
+              padding: "20px 28px",
+              border: "4px solid #ff6b00",
+              background: "#fff5ec",
+              color: "#111",
+              fontSize: 30,
+              fontWeight: 600,
+              lineHeight: 1.3,
+            }}
+          >
+            O modelo usa <strong>Contexto</strong> (o que já foi dito) + <strong>Probabilidade</strong> (o que aprendeu) para escolher o próximo pedaço de texto.
+          </div>
+        </RevealIf>
         <div className="grid gap-8" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-          <Card num="Texto" title="LLMs" body="Chat, resumo, redação e análise." />
-          <Card num="Visão" title="Multimodais" body="Interpretam imagens, áudio e vídeo." />
-          <Card num="Ação" title="Modelos de raciocínio" body="Pensam por etapas antes de responder." />
+          <RevealIf stepIndex={2}>
+            <Card num="1. Tokenização" title="Pedaços numéricos" body="Ele não lê palavras, lê tokens (pedaços numéricos)." />
+          </RevealIf>
+          <RevealIf stepIndex={3}>
+            <Card num="2. Embeddings" title="Coordenadas espaciais" body="Converte tokens em coordenadas espaciais para entender o significado." />
+          </RevealIf>
+          <RevealIf stepIndex={4}>
+            <Card num="3. Atenção" title="Foco no contexto" body="Olha para o contexto inteiro para saber qual palavra anterior importa mais agora." />
+          </RevealIf>
         </div>
+      </SlideShell>
+    ),
+  },
+  // 5.2 — O que é um Language Model?
+  {
+    id: 8.2,
+    steps: 4,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>Capítulo 02 · Language Model</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          O que é um <Underline>Language Model</Underline>?
+        </div>
+        <div className="slide-statement mb-14" style={{ maxWidth: 1400, color: "#333" }}>
+          Um modelo de linguagem aprende os padrões da língua para prever qual palavra vem a seguir.
+        </div>
+        <RevealIf stepIndex={1}>
+          <div
+            className="slide-statement mb-10"
+            style={{
+              maxWidth: 1500,
+              padding: "20px 28px",
+              border: "4px solid #ff6b00",
+              background: "#fff5ec",
+              color: "#111",
+              fontSize: 30,
+              fontWeight: 600,
+              lineHeight: 1.3,
+            }}
+          >
+            Um LM é um modelo estatístico treinado para prever o <strong>próximo token</strong> em uma sequência.
+          </div>
+        </RevealIf>
+        <div className="grid gap-8" style={{ gridTemplateColumns: "1fr 1fr" }}>
+          <RevealIf stepIndex={2}>
+            <div style={{ border: "2px solid #111", padding: "28px 32px" }}>
+              <div className="slide-label" style={{ color: "#ff6b00" }}>O objetivo central</div>
+              <div style={{ fontSize: 30, fontWeight: 600, marginTop: 16, lineHeight: 1.3 }}>
+                Entrada: <span style={{ fontFamily: "monospace" }}>"Hoje o dia está</span>{" "}
+                <span style={{ display: "inline-block", padding: "4px 14px", background: "#ff6b00", color: "white", fontFamily: "monospace" }}>?</span>
+                <span style={{ fontFamily: "monospace" }}>"</span>
+              </div>
+              <div className="slide-body mt-6" style={{ color: "#444" }}>
+                O modelo calcula probabilidades para cada palavra possível a seguir.
+              </div>
+            </div>
+          </RevealIf>
+          <RevealIf stepIndex={3}>
+            <div style={{ border: "2px solid #111", padding: "28px 32px" }}>
+              <div className="slide-label" style={{ color: "#111", marginBottom: 16 }}>Probabilidades</div>
+              <div className="space-y-3">
+                {[
+                  { w: "ensolarado", p: 34 },
+                  { w: "nublado", p: 28 },
+                  { w: "quente", p: 18 },
+                  { w: "frio", p: 12 },
+                  { w: "outras…", p: 8 },
+                ].map((r, i) => (
+                  <div key={r.w}>
+                    <div className="flex justify-between mb-1">
+                      <span style={{ fontWeight: i === 0 ? 700 : 400, color: i === 0 ? "#ff6b00" : "#111" }}>{r.w}</span>
+                      <span style={{ fontFamily: "monospace", color: "#444" }}>{r.p}%</span>
+                    </div>
+                    <div style={{ height: 12, background: "#fafafa", border: "1px solid #ddd", borderRadius: 999, overflow: "hidden" }}>
+                      <div style={{ width: `${r.p * 2.5}%`, height: "100%", background: i === 0 ? "#ff6b00" : i === 1 ? "#fb923c" : i === 2 ? "#fdba74" : "#fed7aa" }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="slide-statement mt-6" style={{ color: "#111" }}>
+                → O modelo escolhe <strong>"ensolarado"</strong>: maior probabilidade.
+              </div>
+            </div>
+          </RevealIf>
+        </div>
+        <RevealIf stepIndex={4}>
+          <ul className="slide-statement list-disc list-inside mt-10 pl-6" style={{ maxWidth: 1500, color: "#333" }}>
+            <li>Um LM aprende padrões estatísticos da linguagem.</li>
+            <li>Objetivo único: prever o próximo token.</li>
+            <li>A escolha é sempre baseada em probabilidades.</li>
+          </ul>
+        </RevealIf>
+      </SlideShell>
+    ),
+  },
+  // 5.3 — O que muda em um Large Language Model?
+  {
+    id: 8.3,
+    steps: 3,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>Capítulo 03 · LLM</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          O que muda em um <Underline>Large Language Model</Underline>?
+        </div>
+        <div className="slide-statement mb-14" style={{ maxWidth: 1400, color: "#333" }}>
+          "Large" não é apenas tamanho — é uma mudança qualitativa na capacidade do modelo.
+        </div>
+        <RevealIf stepIndex={1}>
+          <div
+            className="slide-statement mb-10"
+            style={{
+              maxWidth: 1500,
+              padding: "20px 28px",
+              border: "4px solid #ff6b00",
+              background: "#fff5ec",
+              color: "#111",
+              fontSize: 30,
+              fontWeight: 600,
+              lineHeight: 1.3,
+            }}
+          >
+            Escala transforma o modelo: novos comportamentos <strong>emergem</strong> quando parâmetros e dados ultrapassam certos limites.
+          </div>
+        </RevealIf>
+        <RevealIf stepIndex={2}>
+          <div style={{ border: "2px solid #111", overflow: "hidden" }}>
+            <div className="grid" style={{ gridTemplateColumns: "1.2fr 1fr 1.4fr" }}>
+              <div style={{ background: "#111", color: "white", padding: "16px 20px", fontWeight: 700 }}>Aspecto</div>
+              <div style={{ background: "#ff6b00", color: "white", padding: "16px 20px", fontWeight: 700 }}>Language Model</div>
+              <div style={{ background: "#111", color: "white", padding: "16px 20px", fontWeight: 700 }}>Large Language Model</div>
+              {[
+                ["Parâmetros", "Milhões", "Bilhões (ou trilhões)"],
+                ["Dados de treino", "Poucos", "Enormes volumes de texto"],
+                ["Contexto", "Curto", "128k+ tokens"],
+                ["Escopo", "Tarefa específica", "Generalista, multi-tarefa"],
+                ["Capacidades", "Respostas simples", "Raciocínio, código, criação"],
+                ["Emergência", "Ausente", "Capacidades emergentes"],
+              ].map((r, i) => (
+                <div key={i} className="contents">
+                  <div style={{ padding: "14px 20px", fontWeight: 600, background: i % 2 ? "#fafafa" : "white", borderTop: "1px solid #ddd" }}>{r[0]}</div>
+                  <div style={{ padding: "14px 20px", color: "#444", background: i % 2 ? "#fafafa" : "white", borderTop: "1px solid #ddd" }}>{r[1]}</div>
+                  <div style={{ padding: "14px 20px", color: "#ff6b00", fontWeight: 600, background: i % 2 ? "#fafafa" : "white", borderTop: "1px solid #ddd" }}>{r[2]}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </RevealIf>
+        <RevealIf stepIndex={3}>
+          <div className="grid gap-8 mt-10" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+            {[
+              { n: "175B", l: "GPT-3", d: "175 bilhões de parâmetros" },
+              { n: "1.7T", l: "GPT-4 (est.)", d: "Trilhões, mistura de especialistas" },
+              { n: "128k+", l: "Contexto", d: "Tokens processados de uma vez" },
+            ].map((s) => (
+              <div key={s.l} style={{ border: "4px solid #ff6b00", background: "#fff5ec", padding: "32px 36px" }}>
+                <div style={{ fontSize: 64, fontWeight: 800, color: "#ff6b00", lineHeight: 1 }}>{s.n}</div>
+                <div className="slide-label mt-3" style={{ color: "#111" }}>{s.l}</div>
+                <div className="slide-body mt-2" style={{ color: "#444" }}>{s.d}</div>
+              </div>
+            ))}
+          </div>
+        </RevealIf>
       </SlideShell>
     ),
   },
@@ -544,6 +809,173 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
+  // 6.2.1.1 — BPE (Byte Pair Encoding)
+  {
+    id: 9.1,
+    steps: 3,
+    render: () => {
+      const stages = [
+        {
+          title: "Passo 1",
+          sub: "Início: cada letra é um token. O modelo enxerga tudo separado.",
+          lines: [
+            ["c", "a", "s", "a"],
+            ["c", "a", "s", "a", "c", "o"],
+            ["c", "a", "s", "a", "m", "e", "n", "t", "o"],
+            ["c", "a", "s", "e", "b", "r", "e"],
+          ],
+        },
+        {
+          title: "Passo 2",
+          sub: "Fundir 'c' e 'a'. Par mais frequente vira um novo token.",
+          lines: [
+            ["ca", "s", "a"],
+            ["ca", "s", "a", "c", "o"],
+            ["ca", "s", "a", "m", "e", "n", "t", "o"],
+            ["ca", "s", "e", "b", "r", "e"],
+          ],
+        },
+        {
+          title: "Passo 3",
+          sub: "Fundir 'ca' e 's'. Continuamos fundindo pares frequentes.",
+          lines: [
+            ["cas", "a"],
+            ["cas", "a", "c", "o"],
+            ["cas", "a", "m", "e", "n", "t", "o"],
+            ["cas", "e", "b", "r", "e"],
+          ],
+        },
+        {
+          title: "Passo 4",
+          sub: "Fundir 'cas' e 'a'. Palavras e radicais comuns já emergem.",
+          lines: [
+            ["casa"],
+            ["casa", "c", "o"],
+            ["casa", "m", "e", "n", "t", "o"],
+            ["cas", "e", "b", "r", "e"],
+          ],
+        },
+      ];
+      const tokenStyle = (len: number) => {
+        if (len >= 4) return { background: "#ff6b00", color: "white", borderColor: "#ff6b00", fontWeight: 700 };
+        if (len === 3) return { background: "#fb923c", color: "white", borderColor: "#fb923c", fontWeight: 700 };
+        if (len === 2) return { background: "#fed7aa", color: "#7c2d12", borderColor: "#fed7aa", fontWeight: 600 };
+        return { background: "#fafafa", color: "#111", borderColor: "#ddd", fontWeight: 400 };
+      };
+      return (
+        <SlideShell chapter="CÉREBRO">
+          <Label>Capítulo 06 · BPE</Label>
+          <div className="slide-title mb-8" style={{ maxWidth: 1500 }}>
+            <Underline>Byte Pair Encoding</Underline>
+          </div>
+          <div className="slide-statement mb-10" style={{ maxWidth: 1400, color: "#333" }}>
+            BPE constrói o vocabulário de subpalavras começando por caracteres e fundindo os pares mais frequentes em todo o corpus.
+          </div>
+          <RevealIf stepIndex={1}>
+            <div
+              className="mb-8"
+              style={{
+                maxWidth: 1500,
+                padding: "20px 28px",
+                border: "4px solid #ff6b00",
+                background: "#fff5ec",
+                color: "#111",
+                fontSize: 26,
+                fontWeight: 600,
+                lineHeight: 1.3,
+              }}
+            >
+              BPE acontece na <strong>preparação dos dados</strong>, antes do treinamento. O vocabulário resultante fica <strong>fixo</strong>.
+            </div>
+          </RevealIf>
+          <RevealIf stepIndex={2}>
+            <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
+              {stages.map((s, i) => (
+                <div key={i} style={{ border: "2px solid #111", padding: "20px 24px" }}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: 999,
+                          background: "#111",
+                          color: "white",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontWeight: 800,
+                          fontSize: 18,
+                        }}
+                      >
+                        {i + 1}
+                      </div>
+                      <div style={{ fontSize: 22, fontWeight: 800, color: "#111" }}>{s.title}</div>
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "monospace",
+                        fontSize: 16,
+                        color: "#ff6b00",
+                        fontWeight: 700,
+                        border: "1px solid #ff6b00",
+                        padding: "2px 10px",
+                      }}
+                    >
+                      {s.lines.reduce((acc, line) => acc + line.length, 0)} tokens
+                    </div>
+                  </div>
+                  <div className="space-y-2 mb-3" style={{ fontFamily: "monospace", fontSize: 16 }}>
+                    {s.lines.map((line, lineIdx) => (
+                      <div key={lineIdx} className="flex flex-wrap gap-1">
+                        {line.map((t, tIdx) => (
+                          <span
+                            key={tIdx}
+                            style={{
+                              padding: "2px 8px",
+                              border: "1px solid",
+                              borderRadius: 4,
+                              ...tokenStyle(t.length),
+                            }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: 16, color: "#444", lineHeight: 1.4 }}>{s.sub}</div>
+                </div>
+              ))}
+            </div>
+          </RevealIf>
+          <RevealIf stepIndex={3}>
+            <div
+              style={{
+                maxWidth: 1500,
+                padding: "20px 28px",
+                border: "2px solid #111",
+                background: "white",
+                color: "#111",
+                fontSize: 22,
+                fontWeight: 500,
+                lineHeight: 1.5,
+                marginTop: 32,
+              }}
+            >
+              <div className="slide-label mb-3" style={{ color: "#ff6b00" }}>Por que BPE é poderoso?</div>
+              <ul className="list-disc list-inside pl-4 space-y-2">
+                <li>Palavras comuns viram <strong>tokens únicos</strong>: "de" → [de].</li>
+                <li>Palavras raras são <strong>decompostas</strong>: "incompreensível" → [in, compreen, sível].</li>
+                <li>Palavras novas <strong>nunca são desconhecidas</strong>: "ChatGPT" → [Chat, G, PT].</li>
+                <li>Vocabulário controlado (ex.: 50.000 tokens).</li>
+              </ul>
+            </div>
+          </RevealIf>
+        </SlideShell>
+      );
+    },
+  },
   // 6.2.2 — Embedding
   {
     id: 10,
@@ -601,12 +1033,12 @@ const SLIDES: Slide[] = [
 
               {/* Pontos */}
               {[
-                { name: "Rei",    x: 22, y: 30, big: true },
+                { name: "Rei", x: 22, y: 30, big: true },
                 { name: "Rainha", x: 78, y: 30, big: true },
-                { name: "Homem",  x: 22, y: 70 },
+                { name: "Homem", x: 22, y: 70 },
                 { name: "Mulher", x: 78, y: 70 },
-                { name: "Cão",    x: 35, y: 85, muted: true },
-                { name: "Gato",   x: 45, y: 88, muted: true },
+                { name: "Cão", x: 35, y: 85, muted: true },
+                { name: "Gato", x: 45, y: 88, muted: true },
               ].map((p) => (
                 <div
                   key={p.name}
@@ -1002,6 +1434,70 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
+  // 6 — O que significa GPT?
+  {
+    id: 8.4,
+    steps: 3,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>Capítulo 05 · GPT</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          O que significa <Underline>GPT</Underline>?
+        </div>
+        <div className="slide-statement mb-14" style={{ maxWidth: 1400, color: "#333" }}>
+          Cada letra de GPT revela uma escolha de design fundamental.
+        </div>
+        <RevealIf stepIndex={1}>
+          <div className="grid gap-8" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+            {[
+              { L: "G", n: "Generative", d: "O modelo GERA texto original, não apenas classifica.", ex: '"Era uma vez um desenvolvedor que descobriu os LLMs e…"' },
+              { L: "P", n: "Pre-trained", d: "Aprende com bilhões de textos ANTES de qualquer conversa com o usuário.", ex: "Wikipedia · livros · código · artigos · web" },
+              { L: "T", n: "Transformer", d: "Arquitetura de rede neural baseada em atenção. Criada em 2017.", ex: '"Attention Is All You Need" — Vaswani et al.' },
+            ].map((l) => (
+              <div key={l.L} style={{ border: "2px solid #111", padding: "28px 32px" }}>
+                <div className="flex items-baseline gap-4">
+                  <div style={{ fontSize: 84, fontWeight: 800, color: "#ff6b00", lineHeight: 1 }}>{l.L}</div>
+                  <div>
+                    <div className="slide-label" style={{ color: "#9B9B9B" }}>Letra</div>
+                    <div style={{ fontSize: 28, fontWeight: 700, marginTop: 4 }}>{l.n}</div>
+                  </div>
+                </div>
+                <div className="slide-body mt-6" style={{ color: "#444" }}>{l.d}</div>
+                <div className="mt-4" style={{ background: "#fafafa", border: "1px solid #ddd", padding: "12px 16px", fontStyle: "italic", fontSize: 18, color: "#333" }}>
+                  {l.ex}
+                </div>
+              </div>
+            ))}
+          </div>
+        </RevealIf>
+        <RevealIf stepIndex={2}>
+          <div className="grid gap-8 mt-10" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
+            <div style={{ borderLeft: "4px solid #ff6b00", paddingLeft: 20 }}>
+              <div className="slide-label" style={{ color: "#ff6b00" }}>Fase 1 — Pré-treinamento</div>
+              <div style={{ fontSize: 26, fontWeight: 700, marginTop: 8 }}>O modelo aprende</div>
+              <div className="slide-body mt-3" style={{ color: "#444" }}>
+                Wikipedia · livros · código · artigos · web → aprende <strong>padrões da linguagem</strong> → resulta em um <strong>modelo base</strong> com conhecimento geral.
+              </div>
+            </div>
+            <div style={{ borderLeft: "4px solid #111", paddingLeft: 20 }}>
+              <div className="slide-label" style={{ color: "#111" }}>Fase 2 — Uso (conversa)</div>
+              <div style={{ fontSize: 26, fontWeight: 700, marginTop: 8 }}>O modelo aplica</div>
+              <div className="slide-body mt-3" style={{ color: "#444" }}>
+                Usuário faz uma pergunta → o modelo usa o conhecimento já pré-aprendido → devolve uma resposta. <strong>Não</strong> aprende mais nesta fase.
+              </div>
+            </div>
+          </div>
+        </RevealIf>
+        <RevealIf stepIndex={3}>
+          <ul className="slide-statement list-disc list-inside mt-10 pl-6" style={{ maxWidth: 1500, color: "#333" }}>
+            <li><strong>G</strong> → Gera texto original.</li>
+            <li><strong>P</strong> → Aprende antes de conversar.</li>
+            <li><strong>T</strong> → Usa a arquitetura Transformer.</li>
+          </ul>
+        </RevealIf>
+      </SlideShell>
+    ),
+  },
   // 7 — Modelos populares
   {
     id: 14,
@@ -1014,18 +1510,60 @@ const SLIDES: Slide[] = [
         </div>
         <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
           {[
-            { b: "OpenAI", m: "GPT-5.6<br />Sol / Lua / Terra" },
-            { b: "Anthropic", m: "Claude Fable 5<br />Mythos 5<br />Opus 8" },
-            { b: "Google", m: "Gemini Nano Banano<br />Pro / Ultra" },
+            { b: "OpenAI", r: "GPT 5.6 | Sol | Terra | Luna", c: "GPT 5.5" },
+            { b: "Anthropic", r: "Fable 5", c: "Sonnet 5 | Haiku 4.5" },
+            { b: "Google", r: "Gemini 3.6 Flash | Lite | Cyber", c: "Gemini 3.1 Pro | 3.6 Flash | 3.5 Flash Lite" },
             { b: "Open source", m: "Llama<br />DeepSeek v4" },
           ].map((x, i) => (
             <RevealIf key={x.b} stepIndex={i + 1}>
               <div style={{ borderLeft: "4px solid #ff6b00", paddingLeft: 24 }}>
                 <div className="slide-label" style={{ color: "#111" }}>{x.b}</div>
-                <div style={{ fontSize: 34, fontWeight: 700, marginTop: 14, lineHeight: 1.15 }} dangerouslySetInnerHTML={{ __html: x.m }} />
+                {x.r ? (
+                  <>
+                    <div className="slide-label mt-5" style={{ color: "#9B9B9B" }}>Mais Recentes</div>
+                    <div style={{ fontSize: 26, fontWeight: 700, marginTop: 6, lineHeight: 1.2, color: "#111" }}>{x.r}</div>
+                    {x.c && (
+                      <>
+                        <div className="slide-label mt-5" style={{ color: "#9B9B9B" }}>Acesso via Chat</div>
+                        <div style={{ fontSize: 22, fontWeight: 600, marginTop: 6, lineHeight: 1.25, color: "#444" }}>{x.c}</div>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <div style={{ fontSize: 34, fontWeight: 700, marginTop: 14, lineHeight: 1.15 }} dangerouslySetInnerHTML={{ __html: x.m }} />
+                )}
               </div>
             </RevealIf>
           ))}
+        </div>
+      </SlideShell>
+    ),
+  },
+  // 6.1 — Modalidades de Interação
+  {
+    id: 8,
+    steps: 4,
+    render: () => (
+      <SlideShell chapter="CÉREBRO">
+        <Label>O motor da IA generativa</Label>
+        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
+          Modalidades de <Underline>Interação</Underline>
+        </div>
+        <RevealIf stepIndex={1}>
+          <div className="slide-statement mb-16" style={{ maxWidth: 1400, color: "#333" }}>
+            Os modelos de linguagem expandiram a interface homem-máquina, integrando texto, análise de mídias e resolução de problemas complexos.
+          </div>
+        </RevealIf>
+        <div className="grid gap-8" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+          <RevealIf stepIndex={2}>
+            <Card num="Texto" title="LLMs" body="Chat, resumo, redação e análise." />
+          </RevealIf>
+          <RevealIf stepIndex={3}>
+            <Card num="Visão" title="Multimodais" body="Interpretam imagens, áudio e vídeo." />
+          </RevealIf>
+          <RevealIf stepIndex={4}>
+            <Card num="Ação" title="Modelos de raciocínio" body="Pensam por etapas antes de responder." />
+          </RevealIf>
         </div>
       </SlideShell>
     ),
@@ -1078,18 +1616,25 @@ const SLIDES: Slide[] = [
                 gridArea: "llm",
                 border: "4px solid #ff6b00",
                 background: "#fff5ec",
-                padding: "48px 32px",
+                borderRadius: "50%",
+                padding: "48px 24px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 minHeight: 240,
+                minWidth: 240,
+                aspectRatio: "1 / 1",
+                alignSelf: "center",
+                justifySelf: "center",
               }}
             >
               <div className="slide-label" style={{ color: "#ff6b00" }}>Núcleo</div>
-              <div style={{ fontSize: 42, fontWeight: 700, marginTop: 8 }}>LLM</div>
-              <div className="slide-body" style={{ color: "#444", marginTop: 8, textAlign: "center" }}>
-                A inteligência bruta. Sem o Harness, está presa ao próprio ecossistema.
+              <div style={{ fontSize: 36, fontWeight: 800, marginTop: 8, lineHeight: 1.1, textAlign: "center" }}>
+                LLM (Claude) /<br />CPU
+              </div>
+              <div className="slide-body" style={{ color: "#444", marginTop: 10, textAlign: "center", fontSize: 16 }}>
+                A inteligência bruta.
               </div>
             </div>
           </RevealIf>
@@ -1121,8 +1666,8 @@ const SLIDES: Slide[] = [
             }}
           >
             <strong>Nota arquitetural:</strong> o mesmo LLM, envolto em um Harness diferente, produzirá resultados comportamentais completamente distintos.
-        </div>
-      </RevealIf>
+          </div>
+        </RevealIf>
       </SlideShell>
     ),
   },
@@ -1137,26 +1682,6 @@ const SLIDES: Slide[] = [
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
           <br />Dinâmica · comparação de modelos
-        </div>
-      </SlideShell>
-    ),
-  },
-  // 8.1 — O que é um token?
-  {
-    id: 16,
-    render: () => (
-      <SlideShell chapter="CÉREBRO">
-        <Label>A unidade que o modelo "enxerga"</Label>
-        <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
-          O que é um <Underline>token</Underline>?
-        </div>
-        <div className="slide-statement mb-14" style={{ maxWidth: 1500, color: "#333" }}>
-          A IA não lê palavras como nós, ela lê fragmentos chamados tokens. Tudo que entra e sai é medido assim.
-        </div>
-        <div className="grid gap-10" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-          <Card num="Palavras Curtas" title="1 Token" body="Exemplo: 'gato', 'sol', 'IA'" />
-          <Card num="Palavras Longas" title="2+ Tokens" body="Exemplo: 'Inconstitucional' = In + consti + tu + cional" />
-          <Card num="Média" title="~5 caracteres" body="Equivale a cerca de 1 token em português." />
         </div>
       </SlideShell>
     ),
@@ -1225,17 +1750,26 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-  // 11 — Custos imagem
+  // 13 — Topologia de Camadas
   {
-    id: 19,
+    id: 21,
+    steps: 5,
     render: () => (
       <SlideShell chapter="CÉREBRO">
-        <div className="flex items-center justify-center h-full w-full">
-          <img
-            src={custosImg}
-            alt="Custos"
-            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
-          />
+        <Label>Estrutura conceitual da IA</Label>
+        <div className="slide-title mb-8" style={{ maxWidth: 1500 }}>
+          Topologia de <Underline>camadas</Underline>.
+        </div>
+        <div className="flex flex-col gap-4" style={{ maxWidth: 1500 }}>
+          {[5, 4, 3, 2, 1].map((n, i) => (
+            <RevealIf key={n} stepIndex={5 - i}>
+              <img
+                src={`/imagem/Camada ${n}.png`}
+                alt={`Camada ${n}`}
+                style={{ width: "100%", height: "auto", display: "block", borderRadius: 4 }}
+              />
+            </RevealIf>
+          ))}
         </div>
       </SlideShell>
     ),
@@ -1259,6 +1793,7 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
+  
   // 14 — Projeto no ChatGPT
   {
     id: 22,
@@ -1288,17 +1823,17 @@ const SLIDES: Slide[] = [
           Por que usar?
         </div>
         <div className="grid gap-8 mt-10" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
-          <Card 
-            title="Respostas específicas" 
-            body="Respostas extraídas <strong>exclusivamente dos seus arquivos</strong> (PDFs, Google Docs, Links, Youtube)." 
+          <Card
+            title="Respostas específicas"
+            body="Respostas extraídas <strong>exclusivamente dos seus arquivos</strong> (PDFs, Google Docs, Links, Youtube)."
           />
-          <Card 
-            title="Resumos Instantâneos" 
-            body="Criação automática de <strong>guias de estudo</strong>, FAQs, <strong>cronogramas e briefing</strong> de documentos extensos." 
+          <Card
+            title="Resumos Instantâneos"
+            body="Criação automática de <strong>guias de estudo</strong>, FAQs, <strong>cronogramas e briefing</strong> de documentos extensos."
           />
-          <Card 
-            title="Resumo em áudio" 
-            body="Transforma seus textos em um <strong>podcast interativo</strong> gravado por dois apresentadores virtuais." 
+          <Card
+            title="Resumo em áudio"
+            body="Transforma seus textos em um <strong>podcast interativo</strong> gravado por dois apresentadores virtuais."
           />
         </div>
       </SlideShell>
@@ -1314,13 +1849,13 @@ const SLIDES: Slide[] = [
           <Underline>Aplicações</Underline> no Dia a Dia.
         </div>
         <div className="grid gap-8" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
-          <Card 
-            title="Estudantes e Pesquisadores" 
-            body="Sintetize dezenas de artigos científicos, crie resumos para provas e encontre citações exatas em segundos." 
+          <Card
+            title="Estudantes e Pesquisadores"
+            body="Sintetize dezenas de artigos científicos, crie resumos para provas e encontre citações exatas em segundos."
           />
-          <Card 
-            title="Profissionais e Gestores" 
-            body="Analise relatórios de mercado, atas de reunião e contratos sem perder tempo lendo centenas de páginas." 
+          <Card
+            title="Profissionais e Gestores"
+            body="Analise relatórios de mercado, atas de reunião e contratos sem perder tempo lendo centenas de páginas."
           />
         </div>
       </SlideShell>
@@ -1334,7 +1869,7 @@ const SLIDES: Slide[] = [
         <div className="slide-hero mb-10" style={{ fontSize: 100, lineHeight: 1 }}>
           Resumo e <Underline>Spoiler</Underline>
         </div>
-        
+
         <div className="grid grid-cols-2 gap-32 w-full">
           {/* Dia 1 */}
           <div className="flex flex-col gap-10 p-10 bg-slate-100">
@@ -1404,12 +1939,12 @@ const SLIDES: Slide[] = [
         </div>
         <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
           {[
-            { n: "01", t: "Personificação (Role)", d: "Quem a IA deve parecer ser.", letter:"R" },
-            { n: "02", t: "Tarefa, Objetivo", d: "O que você quer alcançar.", letter:"T" },
-            { n: "03", t: "Contexto adicional", d: "Especificações, arquivos, material, restrições, exemplos, público-alvo", letter:"C" },
-            { n: "04", t: "Formato", d: "Formato esperado.", letter:"F" },
+            { n: "01", t: "Personificação (Role)", d: "Quem a IA deve parecer ser.", letter: "R" },
+            { n: "02", t: "Tarefa, Objetivo", d: "O que você quer alcançar.", letter: "T" },
+            { n: "03", t: "Contexto adicional", d: "Especificações, arquivos, material, restrições, exemplos, público-alvo", letter: "C" },
+            { n: "04", t: "Formato", d: "Formato esperado.", letter: "F" },
           ].map((x, i) => (
-            <div key={x.n}> <br/>
+            <div key={x.n}> <br />
               <div style={{ fontSize: 84, fontWeight: 700, marginTop: 10, borderBottom: `6px solid #111`, paddingTop: 20, color: x.letter == "C" ? "#ff6b00" : "#111" }}>{x.letter}</div>
               <div style={{ fontSize: 34, fontWeight: 700, marginTop: 10 }}>{x.t}</div>
               <div className="slide-body" style={{ color: "#555", marginTop: 8 }}>{x.d}</div>
@@ -1508,7 +2043,7 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-    // 15 — Markdown
+  // 15 — Markdown
   {
     id: 32,
     render: () => (
@@ -1748,6 +2283,7 @@ const SLIDES: Slide[] = [
   // 27 — Cover Ação
   { id: 36, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
 
+<<<<<<< HEAD
   // 27.1 — Anatomia Estrutural de um Agente
   {
     id: 37,
@@ -1856,6 +2392,8 @@ const SLIDES: Slide[] = [
     ),
   },
 
+=======
+>>>>>>> 508bb57924fd72908c33e0bc9614cd3c8318fdee
   // 29 — Exercício final
   {
     id: 38,
