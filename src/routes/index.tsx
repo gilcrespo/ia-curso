@@ -2258,6 +2258,113 @@ const SLIDES: Slide[] = [
   // 27 — Cover Ação
   { id: 36, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
 
+  // 27.1 — Anatomia Estrutural de um Agente
+  {
+    id: 37,
+    render: () => (
+      <SlideShell chapter="AÇÃO">
+        <Label>Arquitetura do exemplo</Label>
+        <div className="slide-title mb-6" style={{ maxWidth: 1500, fontSize: 84, lineHeight: 1.05 }}>
+          Arquitetura do Exemplo: Contexto → <Underline>Skill</Underline> → Apps → Teste.
+        </div>
+        <div className="grid items-stretch" style={{ gridTemplateColumns: "1fr 1fr", gap: 18, maxWidth: 1500 }}>
+          <div style={{ border: "2px solid #111", background: "#fff" }}>
+            <div style={{ padding: "14px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
+              <div className="slide-label" style={{ color: "#111" }}>[ CONTEXTO ]</div>
+              <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>docs/</div>
+              <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
+                O contexto do priorizador: arquitetura, domínio e estado vivo.
+              </div>
+            </div>
+            <pre
+              style={{
+                padding: "16px 18px",
+                fontSize: 20,
+                lineHeight: 1.25,
+                color: "#111",
+                whiteSpace: "pre-wrap",
+                fontFamily:
+                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+              }}
+            >
+              {"docs/\n├─ context/\n│  ├─ index.md\n│  ├─ architecture-overview.md\n│  ├─ domain-map.md\n│  └─ feature-map.md\n├─ domains/\n│  └─ ticket-prioritization/index.md\n├─ live/\n│  ├─ handoff.md\n│  └─ known-risks.md\n└─ specs/\n   └─ active-epic.md"}
+            </pre>
+          </div>
+          <div style={{ border: "2px solid #111", background: "#fff" }}>
+            <div style={{ padding: "14px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
+              <div className="slide-label" style={{ color: "#111" }}>[ SKILLS / COMMANDS ]</div>
+              <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>.trae/</div>
+              <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
+                As instruções de execução: o que fazer e como fazer.
+              </div>
+            </div>
+            <pre
+              style={{
+                padding: "16px 18px",
+                fontSize: 20,
+                lineHeight: 1.25,
+                color: "#111",
+                whiteSpace: "pre-wrap",
+                fontFamily:
+                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+              }}
+            >
+              {".trae/\n├─ skills/\n│  ├─ demo-context-first/SKILL.md\n│  ├─ demo-testing/SKILL.md\n│  └─ demo-web-api/SKILL.md\n└─ commands/\n   ├─ planejar-demo.md\n   ├─ criar-web-demo.md\n   ├─ criar-api-demo.md\n   └─ adicionar-teste-demo.md"}
+            </pre>
+            <div style={{ padding: "12px 18px", borderTop: "2px solid #111", background: "#fff" }}>
+              <div className="slide-label" style={{ color: "#111" }}>O QUE CADA SKILL FAZ</div>
+              <div style={{ marginTop: 10, fontSize: 22, lineHeight: 1.25, color: "#333" }}>
+                <div style={{ marginBottom: 8 }}>
+                  <strong>demo-context-first</strong>: obriga ler o contexto (docs/context + domínio) antes de criar ou alterar código.
+                </div>
+                <div style={{ marginBottom: 8 }}>
+                  <strong>demo-testing</strong>: garante teste unitário simples e legível cobrindo prioridades (crítica, alta, média e baixa).
+                </div>
+                <div>
+                  <strong>demo-web-api</strong>: orienta separar interface e regra (frontend coleta e mostra; backend aplica a lógica).
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{ maxWidth: 1500, border: "2px solid #111", background: "#fff", marginTop: 14 }}>
+          <div style={{ padding: "12px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
+            <div className="slide-label" style={{ color: "#111" }}>[ TESTES ]</div>
+            <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>tests/</div>
+            <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
+              A prova: valida automaticamente a regra de priorização.
+            </div>
+          </div>
+          <pre
+            style={{
+              padding: "14px 18px",
+              fontSize: 20,
+              lineHeight: 1.25,
+              color: "#111",
+              whiteSpace: "pre-wrap",
+              fontFamily:
+                "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            }}
+          >
+            {"tests/\n└─ unit/\n   └─ prioritization.test.js"}
+          </pre>
+        </div>
+        <div
+          className="slide-statement mt-10"
+          style={{
+            maxWidth: 1500,
+            padding: "16px 22px",
+            border: "2px solid #111",
+            background: "#fafafa",
+            color: "#333",
+            fontSize: 30,
+          }}
+        >
+          <strong>Arquitetura em execução:</strong> Quando a IA ganha contexto, skill e ferramenta, ela sai do discurso e entra em execução.
+        </div>
+      </SlideShell>
+    ),
+  },
   // 29 — Exercício final
   {
     id: 38,
