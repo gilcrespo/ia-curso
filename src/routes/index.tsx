@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+﻿﻿import { createFileRoute } from "@tanstack/react-router";
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import logoAsset from "@/assets/logo_barracred.png.asset.json";
@@ -31,12 +31,14 @@ function SlideShell({
   children,
   align = "left",
   padded = true,
+  hideScrollbar = false,
   onClick,
 }: {
   chapter?: string;
   children: ReactNode;
   align?: "left" | "center";
   padded?: boolean;
+  hideScrollbar?: boolean;
   onClick?: () => void;
 }) {
   // Ref do container interno para detectar overflow e auto-scroll
@@ -59,39 +61,43 @@ function SlideShell({
       style={onClick ? { cursor: "pointer" } : undefined}
     >
       {chapter && (
-        <div
-          className="slide-chapter-tag absolute flex items-center gap-4"
-          style={{ top: 50, left: 90 }}
-        >
-          {Object.entries(CHAPTER_IMAGES).map(([name, img]) => (
-            <img
-              key={name}
-              src={img}
-              alt={name}
-              style={{
-                width: name === chapter ? 120 : 80,
-                height: name === chapter ? 120 : 80,
-                objectFit: "contain",
-                filter: name === chapter ? "none" : "grayscale(100%)",
-                border: name === chapter ? "4px solid #f97316" : "2px solid transparent",
-                borderRadius: "50%",
-                transition: "all 0.3s ease",
-              }}
-            />
-          ))}
+        <div className="slide-chapter-header">
+          <div
+            className="slide-chapter-tag absolute flex items-center gap-4"
+            style={{ top: 50, left: 90 }}
+          >
+            {Object.entries(CHAPTER_IMAGES).map(([name, img]) => (
+              <img
+                key={name}
+                src={img}
+                alt={name}
+                style={{
+                  width: name === chapter ? 120 : 80,
+                  height: name === chapter ? 120 : 80,
+                  objectFit: "contain",
+                  filter: name === chapter ? "none" : "grayscale(100%)",
+                  border: name === chapter ? "4px solid #f97316" : "2px solid transparent",
+                  borderRadius: "50%",
+                  transition: "all 0.3s ease",
+                }}
+              />
+            ))}
+          </div>
         </div>
       )}
       <div
         ref={scrollRef}
-        className="absolute inset-0 flex flex-col"
+        className={`absolute inset-0 flex flex-col${hideScrollbar ? " slide-scroll-hidden" : ""}`}
         style={{
           paddingLeft: padded ? 110 : 0,
           paddingRight: padded ? 110 : 0,
-          paddingTop: 180,
+          paddingTop: 205,
           paddingBottom: 120,
           justifyContent: align === "center" ? "center" : "flex-start",
           overflowY: "auto",
           overflowX: "hidden",
+          scrollbarWidth: hideScrollbar ? "none" : undefined,
+          msOverflowStyle: hideScrollbar ? "none" : undefined,
         }}
       >
         {children}
@@ -106,6 +112,42 @@ function Label({ children }: { children: ReactNode }) {
 
 function Underline({ children }: { children: ReactNode }) {
   return <span className="accent-underline">{children}</span>;
+}
+
+function CopyPromptButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyText = useCallback(async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        temp.style.position = "fixed";
+        temp.style.opacity = "0";
+        document.body.appendChild(temp);
+        temp.focus();
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+      }
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopied(false);
+    }
+  }, [text]);
+
+  return (
+    <button
+      type="button"
+      onClick={copyText}
+      className={`audience-copy-button${copied ? " audience-copy-button-copied" : ""}`}
+    >
+      {copied ? "Copiado" : "Copiar"}
+    </button>
+  );
 }
 
 function Card({ title, body, num }: { title: string; body?: string; num?: string }) {
@@ -1491,7 +1533,7 @@ const SLIDES: Slide[] = [
   {
     id: 34,
     render: () => (
-      <SlideShell chapter="HABILIDADES">
+      <SlideShell chapter="HABILIDADES" hideScrollbar>
         <Label>Do contexto ao reaproveitamento</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
           Skill é <Underline>execução reutilizável</Underline>.
@@ -1629,42 +1671,74 @@ const SLIDES: Slide[] = [
   {
     id: 29,
     render: () => (
-      <SlideShell chapter="HABILIDADES">
+      <SlideShell chapter="HABILIDADES" hideScrollbar>
         <Label>Mesma lógica, mundos diferentes</Label>
-        <div className="slide-title mb-14" style={{ maxWidth: 1500 }}>
+        <div className="slide-title mb-6" style={{ maxWidth: 1550, fontSize: 78, lineHeight: 0.96 }}>
           Uma lógica. <Underline>Quatro mundos</Underline>.
         </div>
         <div className="audience-grid">
           {[
             {
               n: "Desenvolvimento",
-              t: "PR, user story e análise técnica.",
-              d: "Transforme uma rotina recorrente em método reutilizável. <a href='/pr.md' target='_blank'>Ver exemplo</a>",
+              t: "Prompt curto para gerar HTML pronto.",
+              d: "Entrega uma pagina HTML com paleta, estilo visual, estrutura de secao e CTA ja definidos pela skill.",
+              p: "Crie uma landing page HTML para simulacao de credito da Barracred com hero, beneficios e CTA.",
+              href: "/skills/skill-dev-backlog-tecnico.md",
+              download: "skill-dev-html-barracred.md",
+              toolHref: "https://gemini.google.com/",
+              toolLabel: "Abrir Gemini",
             },
             {
               n: "Marketing",
-              t: "Briefing, campanha e tom de marca.",
-              d: "A IA passa a repetir o mesmo raciocínio criativo com consistência.",
+              t: "Prompt de imagem com orientacao visual.",
+              d: "Gera prompt pronto para imagem com estilo, composição, negativa e objetivo de campanha.",
+              p: "Crie a imagem principal de uma landing page de curso de IA para iniciantes, moderna e confiavel.",
+              href: "/skills/skill-marketing-prompt-imagem.md",
+              download: "skill-marketing-prompt-imagem.md",
             },
             {
               n: "Vídeo",
-              t: "Roteiro, cortes e descrição final.",
-              d: "Um bom fluxo reduz retrabalho e acelera a produção.",
+              t: "Roteiro curto com cortes e CTA.",
+              d: "Converte uma ideia em roteiro de video, beats, cenas, legenda e chamada final.",
+              p: "Transforme em reels de 45s: IA nao substitui criatividade, acelera execucao.",
+              href: "/skills/skill-video-roteiro-curto.md",
+              download: "skill-video-roteiro-curto.md",
+              toolHref: "https://app.runwayml.com/video-tools/teams/israelribeiro313/ai-tools/agent",
+              toolLabel: "Abrir Runway",
             },
             {
               n: "Operação",
-              t: "Resumo, resposta e histórico útil.",
-              d: "Padronize tarefas de toda semana. <a href='/consumo.md' target='_blank'>Ver exemplo</a>",
+              t: "E-mail pronto com tom e objetivo.",
+              d: "Transforma um pedido curto em e-mail profissional com assunto, corpo, fechamento e chamada final.",
+              p: "Escreva um e-mail cobrando retorno de proposta enviada ha 5 dias, com tom cordial e objetivo.",
+              href: "/skills/skill-operacao-resumo-atendimento.md",
+              download: "skill-operacao-email-profissional.md",
             },
-          ].map((world, i) => (
-            <div key={world.n} className="audience-card" style={{ animationDelay: `${i * 0.6}s` }}>
+          ].map((world) => (
+            <div key={world.n} className="audience-card audience-card-static">
               <div className="slide-label" style={{ color: "#111" }}>{world.n}</div>
               <div className="skill-step-title" style={{ marginTop: 14 }}>{world.t}</div>
-              <div
-                className="skill-step-body"
-                style={{ marginTop: 18 }}
-                dangerouslySetInnerHTML={{ __html: world.d }}
-              />
+              <div className="skill-step-body" style={{ marginTop: 14 }}>{world.d}</div>
+              <div className="audience-example">
+                <div className="audience-example-head">
+                  <span className="audience-example-label">Pedido de teste</span>
+                  <CopyPromptButton text={world.p} />
+                </div>
+                <span>{world.p}</span>
+              </div>
+              <div className="audience-actions">
+                <a className="audience-link" href={world.href} target="_blank" rel="noreferrer">
+                  Abrir skill
+                </a>
+                <a className="audience-link audience-link-secondary" href={world.href} download={world.download}>
+                  Baixar .md
+                </a>
+                {world.toolHref && world.toolLabel ? (
+                  <a className="audience-link audience-link-secondary" href={world.toolHref} target="_blank" rel="noreferrer">
+                    {world.toolLabel}
+                  </a>
+                ) : null}
+              </div>
             </div>
           ))}
         </div>
@@ -1679,99 +1753,104 @@ const SLIDES: Slide[] = [
     id: 37,
     render: () => (
       <SlideShell chapter="AÇÃO">
-        <Label>Recapitulando</Label>
-        <div className="slide-title mb-12" style={{ maxWidth: 1500 }}>
-          A anatomia estrutural de um <Underline>agente</Underline>.
+        <Label>Arquitetura do exemplo</Label>
+        <div className="slide-title mb-6" style={{ maxWidth: 1500, fontSize: 84, lineHeight: 1.05 }}>
+          Arquitetura do Exemplo: Contexto → <Underline>Skill</Underline> → Apps → Teste.
         </div>
-        <div
-          className="grid items-stretch"
-          style={{
-            gridTemplateColumns: "1fr auto 1fr auto 1fr auto 1fr",
-            gap: 16,
-            alignItems: "center",
-            marginTop: 30,
-          }}
-        >
-          <div
-            style={{
-              border: "2px solid #111",
-              padding: "32px 28px",
-              minHeight: 280,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div className="slide-label" style={{ color: "#111" }}>[ CÉREBRO ]</div>
-            <div style={{ fontSize: 30, fontWeight: 700, marginTop: 8 }}>LLM (Claude)</div>
-            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
-              A inteligência bruta, o raciocínio probabilístico e a capacidade de interpretação.
+        <div className="grid items-stretch" style={{ gridTemplateColumns: "1fr 1fr", gap: 18, maxWidth: 1500 }}>
+          <div style={{ border: "2px solid #111", background: "#fff" }}>
+            <div style={{ padding: "14px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
+              <div className="slide-label" style={{ color: "#111" }}>[ CONTEXTO ]</div>
+              <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>docs/</div>
+              <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
+                O contexto do priorizador: arquitetura, domínio e estado vivo.
+              </div>
             </div>
+            <pre
+              style={{
+                padding: "16px 18px",
+                fontSize: 20,
+                lineHeight: 1.25,
+                color: "#111",
+                whiteSpace: "pre-wrap",
+                fontFamily:
+                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+              }}
+            >
+              {"docs/\n├─ context/\n│  ├─ index.md\n│  ├─ architecture-overview.md\n│  ├─ domain-map.md\n│  └─ feature-map.md\n├─ domains/\n│  └─ ticket-prioritization/index.md\n├─ live/\n│  ├─ handoff.md\n│  └─ known-risks.md\n└─ specs/\n   └─ active-epic.md"}
+            </pre>
           </div>
-          <div style={{ fontSize: 64, fontWeight: 700, color: "#3b82f6", textAlign: "center" }}>+</div>
-          <div
-            style={{
-              border: "2px solid #111",
-              padding: "32px 28px",
-              minHeight: 280,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div className="slide-label" style={{ color: "#111" }}>[ FERRAMENTAS ]</div>
-            <div style={{ fontSize: 30, fontWeight: 700, marginTop: 8 }}>MCP Servers / APIs / Web</div>
-            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
-              Os "braços" executivos que permitem manipular arquivos e dados externos.
+          <div style={{ border: "2px solid #111", background: "#fff" }}>
+            <div style={{ padding: "14px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
+              <div className="slide-label" style={{ color: "#111" }}>[ SKILLS / COMMANDS ]</div>
+              <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>.trae/</div>
+              <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
+                As instruções de execução: o que fazer e como fazer.
+              </div>
             </div>
-          </div>
-          <div style={{ fontSize: 64, fontWeight: 700, color: "#3b82f6", textAlign: "center" }}>+</div>
-          <div
-            style={{
-              border: "2px solid #111",
-              padding: "32px 28px",
-              minHeight: 280,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div className="slide-label" style={{ color: "#111" }}>[ LOOP REACT ]</div>
-            <div style={{ fontSize: 30, fontWeight: 700, marginTop: 8 }}>Pense → Aja → Observe</div>
-            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
-              A autonomia iterativa para buscar um objetivo até sua conclusão.
-            </div>
-          </div>
-          <div style={{ fontSize: 64, fontWeight: 700, color: "#16a34a", textAlign: "center" }}>=</div>
-          <div
-            style={{
-              border: "4px solid #16a34a",
-              background: "#f0fdf4",
-              padding: "32px 28px",
-              minHeight: 280,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <div className="slide-label" style={{ color: "#16a34a" }}>[ AGENTE AUTÔNOMO ]</div>
-            <div style={{ fontSize: 30, fontWeight: 700, marginTop: 8 }}>Entidade capaz de agir</div>
-            <div className="slide-body" style={{ color: "#444", marginTop: 10 }}>
-              Recebe um objetivo, traça um plano, utiliza ferramentas e corrige a própria rota de forma independente.
+            <pre
+              style={{
+                padding: "16px 18px",
+                fontSize: 20,
+                lineHeight: 1.25,
+                color: "#111",
+                whiteSpace: "pre-wrap",
+                fontFamily:
+                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+              }}
+            >
+              {".trae/\n├─ skills/\n│  ├─ demo-context-first/SKILL.md\n│  ├─ demo-testing/SKILL.md\n│  └─ demo-web-api/SKILL.md\n└─ commands/\n   ├─ planejar-demo.md\n   ├─ criar-web-demo.md\n   ├─ criar-api-demo.md\n   └─ adicionar-teste-demo.md"}
+            </pre>
+            <div style={{ padding: "12px 18px", borderTop: "2px solid #111", background: "#fff" }}>
+              <div className="slide-label" style={{ color: "#111" }}>O QUE CADA SKILL FAZ</div>
+              <div style={{ marginTop: 10, fontSize: 22, lineHeight: 1.25, color: "#333" }}>
+                <div style={{ marginBottom: 8 }}>
+                  <strong>demo-context-first</strong>: obriga ler o contexto (docs/context + domínio) antes de criar ou alterar código.
+                </div>
+                <div style={{ marginBottom: 8 }}>
+                  <strong>demo-testing</strong>: garante teste unitário simples e legível cobrindo prioridades (crítica, alta, média e baixa).
+                </div>
+                <div>
+                  <strong>demo-web-api</strong>: orienta separar interface e regra (frontend coleta e mostra; backend aplica a lógica).
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div style={{ maxWidth: 1500, border: "2px solid #111", background: "#fff", marginTop: 14 }}>
+          <div style={{ padding: "12px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
+            <div className="slide-label" style={{ color: "#111" }}>[ TESTES ]</div>
+            <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>tests/</div>
+            <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
+              A prova: valida automaticamente a regra de priorização.
+            </div>
+          </div>
+          <pre
+            style={{
+              padding: "14px 18px",
+              fontSize: 20,
+              lineHeight: 1.25,
+              color: "#111",
+              whiteSpace: "pre-wrap",
+              fontFamily:
+                "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+            }}
+          >
+            {"tests/\n└─ unit/\n   └─ prioritization.test.js"}
+          </pre>
+        </div>
         <div
-          className="slide-statement mt-12"
+          className="slide-statement mt-10"
           style={{
             maxWidth: 1500,
-            padding: "20px 28px",
+            padding: "16px 22px",
             border: "2px solid #111",
             background: "#fafafa",
             color: "#333",
+            fontSize: 30,
           }}
         >
-          <strong>Nota arquitetural:</strong> sem ferramentas ou sem o loop iterativo, você tem apenas um modelo de linguagem brilhante preso em seu próprio ecossistema.
+          <strong>Arquitetura em execução:</strong> Quando a IA ganha contexto, skill e ferramenta, ela sai do discurso e entra em execução.
         </div>
       </SlideShell>
     ),
@@ -1785,6 +1864,9 @@ const SLIDES: Slide[] = [
         <Label>Exercício final · Mão na massa</Label>
         <div className="slide-title mb-10" style={{ maxWidth: 1500 }}>
           O que merece virar <Underline>método</Underline>?
+        </div>
+        <div className="slide-caption" style={{ maxWidth: 1200, fontSize: 28, color: "#666", marginTop: -8, marginBottom: 18 }}>
+          Metodo e um jeito claro, repetivel e reutilizavel de fazer algo.
         </div>
         <div className="slide-statement" style={{ maxWidth: 1500, color: "#333" }}>
           Se repete toda semana, custa mais do que parece.
@@ -1858,6 +1940,7 @@ const SLIDES: Slide[] = [
 
 function Presentation() {
   const [index, setIndex] = useState(0);
+  const [jumpValue, setJumpValue] = useState("1");
 
   // `step` controla quantos elementos de um slide já foram revelados.
   // É resetado toda vez que o slide atual muda.
@@ -1873,6 +1956,13 @@ function Presentation() {
     });
     setStep(0);
   }, []);
+
+  const commitJump = useCallback(() => {
+    const parsed = parseInt(jumpValue, 10);
+    const normalized = isNaN(parsed) ? index + 1 : Math.min(Math.max(parsed, 1), SLIDES.length);
+    setJumpValue(String(normalized));
+    go(normalized - 1);
+  }, [go, index, jumpValue]);
 
   const advance = useCallback(() => {
     const current = SLIDES[index];
@@ -1949,6 +2039,10 @@ function Presentation() {
     document.title = `${index + 1}/${SLIDES.length} · Inteligência Artificial — Barracred`;
   }, [index]);
 
+  useEffect(() => {
+    setJumpValue(String(index + 1));
+  }, [index]);
+
   // Fit scale
   const stageRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
@@ -1996,8 +2090,29 @@ function Presentation() {
         >
           ←
         </button>
-        <div className="text-sm tabular-nums" style={{ minWidth: 60, textAlign: "center" }}>
-          {index + 1} / {SLIDES.length}
+        <div
+          className="text-sm tabular-nums flex items-center justify-center gap-2"
+          style={{ minWidth: 104, textAlign: "center" }}
+        >
+          <input
+            value={jumpValue}
+            onChange={(e) => setJumpValue(e.target.value.replace(/\D/g, "").slice(0, 3))}
+            onBlur={commitJump}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                commitJump();
+              } else if (e.key === "Escape") {
+                setJumpValue(String(index + 1));
+                (e.target as HTMLInputElement).blur();
+              }
+            }}
+            inputMode="numeric"
+            aria-label="Ir para slide"
+            className="bg-transparent border-none outline-none text-center"
+            style={{ width: 32, color: "white" }}
+          />
+          <span>/ {SLIDES.length}</span>
         </div>
         <button
           onClick={advance}

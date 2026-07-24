@@ -171,6 +171,15 @@
 .slide-chapter-tag { font-size: 16px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--slide-mute); }
 .slide-num       { font-size: 200px; font-weight: 800; line-height: 0.9; letter-spacing: -0.06em; }
 
+.slide-chapter-header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 185px;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(180deg, #fff 0%, #fff 76%, rgb(255 255 255 / 0%) 100%);
+}
+
 .accent-underline {
   position: relative;
   display: inline-block;
@@ -192,6 +201,10 @@
   color: var(--slide-accent);
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.slide-scroll-hidden::-webkit-scrollbar {
+  display: none;
 }
 
 .slide-wrapper {
@@ -405,32 +418,34 @@
 }
 
 .skill-demo {
-  margin-top: 42px;
+  margin-top: 22px;
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.62fr);
-  gap: 56px;
-  align-items: center;
+  grid-template-columns: 650px 330px;
+  gap: 34px;
+  align-items: start;
 }
 
 .skill-demo-stage {
   position: relative;
-  min-height: 460px;
+  min-height: 330px;
+  width: 650px;
+  margin-left: 8px;
 }
 
 .skill-demo-doc {
   position: absolute;
-  top: 54px;
-  right: 38px;
-  width: 420px;
-  padding: 22px 22px 14px;
+  top: 34px;
+  right: -12px;
+  width: 292px;
+  padding: 14px 14px 8px;
   border: 2px solid rgb(17 17 17 / 18%);
   background: #fff;
   opacity: 0.92;
 }
 
 .skill-demo-doc-header {
-  margin-bottom: 14px;
-  font-size: 26px;
+  margin-bottom: 8px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #111;
@@ -439,10 +454,10 @@
 .skill-demo-doc-line {
   display: grid;
   grid-template-columns: 1fr 1.35fr;
-  gap: 14px;
-  padding: 10px 0;
+  gap: 8px;
+  padding: 6px 0;
   border-top: 1px solid rgb(17 17 17 / 10%);
-  font-size: 20px;
+  font-size: 14px;
   line-height: 1.2;
 }
 
@@ -458,28 +473,28 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 760px;
-  padding: 26px 28px 28px;
+  width: 500px;
+  padding: 16px 18px 18px;
   border: 2px solid #111;
   background: #fff;
-  box-shadow: 18px 18px 0 rgb(255 107 0 / 10%);
+  box-shadow: 12px 12px 0 rgb(255 107 0 / 10%);
 }
 
 .skill-demo-chat-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 16px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgb(17 17 17 / 10%);
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
 }
 
 .skill-demo-chat-pill {
-  padding: 8px 14px;
+  padding: 5px 10px;
   border: 2px solid #111;
   border-radius: 999px;
-  font-size: 16px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -488,28 +503,28 @@
 
 .skill-demo-user,
 .skill-demo-assistant {
-  margin-top: 22px;
-  padding: 22px 24px;
+  margin-top: 14px;
+  padding: 14px 16px;
 }
 
 .skill-demo-user {
-  max-width: 560px;
+  max-width: 340px;
   margin-left: auto;
   background: rgb(17 17 17 / 5%);
-  font-size: 28px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.2;
 }
 
 .skill-demo-assistant {
-  max-width: 620px;
-  border-left: 6px solid var(--slide-accent);
+  max-width: 420px;
+  border-left: 5px solid var(--slide-accent);
   background: #fff;
 }
 
 .skill-demo-assistant-title {
-  margin-bottom: 14px;
-  font-size: 20px;
+  margin-bottom: 8px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -517,29 +532,30 @@
 }
 
 .skill-demo-assistant-line {
-  font-size: 26px;
-  line-height: 1.28;
+  font-size: 15px;
+  line-height: 1.2;
   color: #333;
 }
 
 .skill-demo-assistant-line + .skill-demo-assistant-line {
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 .skill-demo-copy {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 18px;
+  padding-top: 8px;
 }
 
 .skill-demo-point {
-  padding-top: 18px;
+  padding-top: 12px;
   border-top: 2px solid rgb(17 17 17 / 10%);
 }
 
 .skill-demo-point-text {
-  margin-top: 10px;
-  font-size: 30px;
+  margin-top: 8px;
+  font-size: 19px;
   line-height: 1.18;
   font-weight: 600;
   color: #333;
@@ -579,30 +595,34 @@
 
 .skill-step-title {
   margin-top: 14px;
-  font-size: 38px;
+  font-size: 31px;
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
 .skill-step-body {
-  font-size: 26px;
-  line-height: 1.35;
+  font-size: 21px;
+  line-height: 1.22;
   color: #444;
 }
 
 .audience-grid {
-  margin-top: 18px;
+  margin-top: 6px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px 40px;
+  gap: 16px 30px;
 }
 
 .audience-card {
   position: relative;
-  min-height: 220px;
-  padding-top: 26px;
+  min-height: 0;
+  padding-top: 18px;
   animation: audience-float 6s ease-in-out infinite;
+}
+
+.audience-card-static {
+  animation: none;
 }
 
 .audience-card::before {
@@ -613,6 +633,96 @@
   width: 96px;
   height: 8px;
   background: var(--slide-accent);
+}
+
+.audience-example {
+  margin-top: 10px;
+  padding: 9px 12px;
+  border: 1px solid rgb(17 17 17 / 12%);
+  background: rgb(255 255 255 / 72%);
+  font-size: 17px;
+  line-height: 1.18;
+  color: #333;
+}
+
+.audience-example-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.audience-example-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.audience-copy-button {
+  border: 1px solid rgb(255 107 0 / 45%);
+  background: rgb(255 107 0 / 8%);
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--slide-accent);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.audience-copy-button:hover {
+  background: rgb(255 107 0 / 14%);
+  border-color: rgb(255 107 0 / 72%);
+  transform: translateY(-1px);
+}
+
+.audience-copy-button-copied {
+  background: var(--slide-accent);
+  border-color: var(--slide-accent);
+  color: #fff;
+}
+
+.audience-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.audience-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 114px;
+  padding: 8px 10px;
+  border: 1.5px solid #111;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+  text-decoration: none;
+  background: #fff;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.audience-link:hover {
+  transform: translateY(-1px);
+  background: #111;
+  color: #fff;
+}
+
+.audience-link-secondary {
+  border-color: rgb(17 17 17 / 18%);
+  color: #555;
 }
 
 .action-grid {
