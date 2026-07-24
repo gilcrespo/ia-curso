@@ -1,4 +1,4 @@
-﻿import { createFileRoute } from "@tanstack/react-router";
+﻿﻿﻿import { createFileRoute } from "@tanstack/react-router";
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import logoAsset from "@/assets/logo_barracred.png.asset.json";
@@ -49,6 +49,10 @@ function SlideShell({
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
+    if (currentStep === 0) {
+      el.scrollTo({ top: 0, behavior: "auto" });
+      return;
+    }
     // Quando o conteúdo passa da altura visível, rola automaticamente
     // até o final para mostrar o que acabou de aparecer.
     el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
@@ -2262,105 +2266,255 @@ const SLIDES: Slide[] = [
   {
     id: 37,
     render: () => (
-      <SlideShell chapter="AÇÃO">
-        <Label>Arquitetura do exemplo</Label>
-        <div className="slide-title mb-6" style={{ maxWidth: 1500, fontSize: 84, lineHeight: 1.05 }}>
-          Arquitetura do Exemplo: Contexto → <Underline>Skill</Underline> → Apps → Teste.
+      <SlideShell chapter="AÇÃO" hideScrollbar>
+        <Label>Ambiente produtivo</Label>
+        <div className="slide-title mb-6" style={{ maxWidth: 1500, marginLeft: "auto", marginRight: "auto", fontSize: 84, lineHeight: 1.05 }}>
+          Organização do <Underline>ambiente</Underline> de trabalho.
         </div>
-        <div className="grid items-stretch" style={{ gridTemplateColumns: "1fr 1fr", gap: 18, maxWidth: 1500 }}>
-          <div style={{ border: "2px solid #111", background: "#fff" }}>
-            <div style={{ padding: "14px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
-              <div className="slide-label" style={{ color: "#111" }}>[ CONTEXTO ]</div>
-              <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>docs/</div>
-              <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
-                O contexto do priorizador: arquitetura, domínio e estado vivo.
-              </div>
-            </div>
-            <pre
+        <div className="slide-caption" style={{ maxWidth: 1200, marginLeft: "auto", marginRight: "auto", fontSize: 28, color: "#666", marginTop: -4, marginBottom: 14 }}>
+          Skills viram atalhos: você executa mais e decide menos.
+        </div>
+
+        <div style={{ maxWidth: 1500, width: "100%", marginLeft: "auto", marginRight: "auto", display: "flex", justifyContent: "center" }}>
+          <div style={{ width: 1420 }}>
+            <div
               style={{
-                padding: "16px 18px",
-                fontSize: 20,
-                lineHeight: 1.25,
-                color: "#111",
-                whiteSpace: "pre-wrap",
-                fontFamily:
-                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+                borderRadius: 30,
+                background: "#111",
+                padding: 18,
+                boxShadow: "0 40px 110px rgba(0,0,0,0.22)",
               }}
             >
-              {"docs/\n├─ context/\n│  ├─ index.md\n│  ├─ architecture-overview.md\n│  ├─ domain-map.md\n│  └─ feature-map.md\n├─ domains/\n│  └─ ticket-prioritization/index.md\n├─ live/\n│  ├─ handoff.md\n│  └─ known-risks.md\n└─ specs/\n   └─ active-epic.md"}
-            </pre>
-          </div>
-          <div style={{ border: "2px solid #111", background: "#fff" }}>
-            <div style={{ padding: "14px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
-              <div className="slide-label" style={{ color: "#111" }}>[ SKILLS / COMMANDS ]</div>
-              <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>.trae/</div>
-              <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
-                As instruções de execução: o que fazer e como fazer.
+              <div style={{ borderRadius: 22, overflow: "hidden", background: "#fff" }}>
+                <div
+                  style={{
+                    position: "relative",
+                    minHeight: 460,
+                    background:
+                      "radial-gradient(1200px 600px at 20% 10%, rgba(255,107,0,0.18), rgba(255,255,255,0) 60%), linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%)",
+                  }}
+                >
+                  <div style={{ padding: 14 }}>
+                    <div
+                      style={{
+                        border: "2px solid #111",
+                        borderRadius: 18,
+                        background: "rgba(255,255,255,0.9)",
+                        boxShadow: "0 28px 70px rgba(0,0,0,0.14)",
+                        overflow: "hidden",
+                        backdropFilter: "blur(10px)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          padding: "12px 16px",
+                          borderBottom: "2px solid #111",
+                          background: "#fafafa",
+                        }}
+                      >
+                        <div style={{ display: "flex", gap: 8 }}>
+                          <div style={{ width: 10, height: 10, borderRadius: 999, background: "#111", opacity: 0.25 }} />
+                          <div style={{ width: 10, height: 10, borderRadius: 999, background: "#111", opacity: 0.25 }} />
+                          <div style={{ width: 10, height: 10, borderRadius: 999, background: "#111", opacity: 0.25 }} />
+                        </div>
+                        <div className="slide-label" style={{ color: "#111" }}>PASTAS & SKILLS</div>
+                        <div style={{ width: 34 }} />
+                      </div>
+
+                      <div style={{ padding: "10px 14px", borderBottom: "2px solid #111", background: "#fff" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                          <div
+                            style={{
+                              fontSize: 18,
+                              color: "#555",
+                              fontFamily:
+                                "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            Skills/
+                          </div>
+                          <div
+                            style={{
+                              border: "2px solid #f97316",
+                              background: "#fff7ed",
+                              color: "#111",
+                              borderRadius: 999,
+                              padding: "5px 10px",
+                              fontSize: 15,
+                              fontWeight: 800,
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            Contexto anexado
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", minHeight: 350 }}>
+                        <div style={{ borderRight: "2px solid #111", background: "#fff" }}>
+                          <div style={{ padding: "12px 12px 8px 12px" }}>
+                            <div className="slide-label" style={{ color: "#111" }}>PASTAS</div>
+                          </div>
+                          {[
+                            { name: "Skills", active: true },
+                            { name: "Contexto", active: false },
+                          ].map((f) => (
+                            <div
+                              key={f.name}
+                              style={{
+                                padding: "8px 12px",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 12,
+                                background: f.active ? "#fff7ed" : "transparent",
+                                borderTop: "1px solid rgba(17,17,17,0.18)",
+                              }}
+                            >
+                              <div style={{ position: "relative", width: 30, height: 22, flex: "0 0 auto" }}>
+                                <div
+                                  style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 6,
+                                    width: 14,
+                                    height: 9,
+                                    border: "2px solid #111",
+                                    borderBottom: "none",
+                                    borderRadius: "6px 6px 0 0",
+                                    background: f.active ? "#fff7ed" : "#f3f4f6",
+                                  }}
+                                />
+                                <div
+                                  style={{
+                                    position: "absolute",
+                                    top: 7,
+                                    left: 0,
+                                    right: 0,
+                                    height: 15,
+                                    border: "2px solid #111",
+                                    borderRadius: 8,
+                                    background: f.active ? "#fff7ed" : "#f3f4f6",
+                                  }}
+                                />
+                              </div>
+                              <div style={{ fontSize: 18, fontWeight: 900, color: "#111" }}>{f.name}</div>
+                            </div>
+                          ))}
+                          <div style={{ padding: "12px 12px" }}>
+                            <div className="slide-label" style={{ color: "#111" }}>BASE</div>
+                            <div style={{ marginTop: 8, fontSize: 16, lineHeight: 1.2, color: "#444" }}>
+                              Domínio do priorizador anexado.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div style={{ background: "#fff" }}>
+                          <div
+                            style={{
+                              display: "grid",
+                              gridTemplateColumns: "1.2fr 1.8fr",
+                              gap: 12,
+                              padding: "10px 12px",
+                              borderBottom: "2px solid #111",
+                              background: "#fafafa",
+                            }}
+                          >
+                            <div className="slide-label" style={{ color: "#111" }}>SKILL</div>
+                            <div className="slide-label" style={{ color: "#111" }}>SERVE PARA</div>
+                          </div>
+
+                          {[
+                            {
+                              name: "demo-context-first",
+                              desc: "Força leitura do contexto antes de qualquer mudança.",
+                            },
+                            {
+                              name: "demo-web-api",
+                              desc: "Separa interface (web) e regra de negócio (API).",
+                            },
+                            {
+                              name: "demo-testing",
+                              desc: "Cria testes simples e legíveis para provar a regra.",
+                            },
+                          ].map((s, idx) => (
+                            <div
+                              key={s.name}
+                              style={{
+                                display: "grid",
+                                gridTemplateColumns: "1.2fr 1.8fr",
+                                gap: 12,
+                                padding: "10px 12px",
+                                borderTop: idx === 0 ? "none" : "1px solid rgba(17,17,17,0.18)",
+                                alignItems: "center",
+                              }}
+                            >
+                              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+                                <div
+                                  style={{
+                                    width: 30,
+                                    height: 30,
+                                    borderRadius: 12,
+                                    background: "#111",
+                                    color: "#fff",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    fontWeight: 900,
+                                    letterSpacing: 0.4,
+                                    flex: "0 0 auto",
+                                  }}
+                                >
+                                  S
+                                </div>
+                                <div style={{ minWidth: 0 }}>
+                                  <div style={{ fontSize: 18, fontWeight: 900, color: "#111", lineHeight: 1.1 }}>{s.name}</div>
+                                  <div
+                                    style={{
+                                      marginTop: 4,
+                                      fontSize: 14,
+                                      color: "#555",
+                                      fontFamily:
+                                        "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                      whiteSpace: "nowrap",
+                                    }}
+                                  >
+                                    SKILL.md
+                                  </div>
+                                </div>
+                              </div>
+                              <div style={{ fontSize: 18, lineHeight: 1.2, color: "#333" }}>{s.desc}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <pre
-              style={{
-                padding: "16px 18px",
-                fontSize: 20,
-                lineHeight: 1.25,
-                color: "#111",
-                whiteSpace: "pre-wrap",
-                fontFamily:
-                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
-              }}
-            >
-              {".trae/\n├─ skills/\n│  ├─ demo-context-first/SKILL.md\n│  ├─ demo-testing/SKILL.md\n│  └─ demo-web-api/SKILL.md\n└─ commands/\n   ├─ planejar-demo.md\n   ├─ criar-web-demo.md\n   ├─ criar-api-demo.md\n   └─ adicionar-teste-demo.md"}
-            </pre>
-            <div style={{ padding: "12px 18px", borderTop: "2px solid #111", background: "#fff" }}>
-              <div className="slide-label" style={{ color: "#111" }}>O QUE CADA SKILL FAZ</div>
-              <div style={{ marginTop: 10, fontSize: 22, lineHeight: 1.25, color: "#333" }}>
-                <div style={{ marginBottom: 8 }}>
-                  <strong>demo-context-first</strong>: obriga ler o contexto (docs/context + domínio) antes de criar ou alterar código.
-                </div>
-                <div style={{ marginBottom: 8 }}>
-                  <strong>demo-testing</strong>: garante teste unitário simples e legível cobrindo prioridades (crítica, alta, média e baixa).
-                </div>
-                <div>
-                  <strong>demo-web-api</strong>: orienta separar interface e regra (frontend coleta e mostra; backend aplica a lógica).
-                </div>
-              </div>
-            </div>
+            <div style={{ width: 440, height: 12, background: "#111", borderRadius: 999, margin: "10px auto 0", opacity: 0.95 }} />
           </div>
-        </div>
-        <div style={{ maxWidth: 1500, border: "2px solid #111", background: "#fff", marginTop: 14 }}>
-          <div style={{ padding: "12px 18px", borderBottom: "2px solid #111", background: "#fafafa" }}>
-            <div className="slide-label" style={{ color: "#111" }}>[ TESTES ]</div>
-            <div style={{ fontSize: 28, fontWeight: 800, marginTop: 8 }}>tests/</div>
-            <div style={{ color: "#444", marginTop: 8, fontSize: 22, lineHeight: 1.2 }}>
-              A prova: valida automaticamente a regra de priorização.
-            </div>
-          </div>
-          <pre
-            style={{
-              padding: "14px 18px",
-              fontSize: 20,
-              lineHeight: 1.25,
-              color: "#111",
-              whiteSpace: "pre-wrap",
-              fontFamily:
-                "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
-            }}
-          >
-            {"tests/\n└─ unit/\n   └─ prioritization.test.js"}
-          </pre>
         </div>
         <div
-          className="slide-statement mt-10"
+          className="slide-statement mt-8"
           style={{
             maxWidth: 1500,
-            padding: "16px 22px",
+            padding: "14px 18px",
             border: "2px solid #111",
             background: "#fafafa",
             color: "#333",
-            fontSize: 30,
+            fontSize: 28,
           }}
         >
-          <strong>Arquitetura em execução:</strong> Quando a IA ganha contexto, skill e ferramenta, ela sai do discurso e entra em execução.
+          <strong>Ação:</strong> um ambiente organizado transforma IA em produtividade diária.
         </div>
       </SlideShell>
     ),
