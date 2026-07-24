@@ -61,30 +61,6 @@ function SlideShell({
       style={onClick ? { cursor: "pointer" } : undefined}
     >
       {chapter && (
-<<<<<<< HEAD
-        <div className="slide-chapter-header">
-          <div
-            className="slide-chapter-tag absolute flex items-center gap-4"
-            style={{ top: 50, left: 90 }}
-          >
-            {Object.entries(CHAPTER_IMAGES).map(([name, img]) => (
-              <img
-                key={name}
-                src={img}
-                alt={name}
-                style={{
-                  width: name === chapter ? 120 : 80,
-                  height: name === chapter ? 120 : 80,
-                  objectFit: "contain",
-                  filter: name === chapter ? "none" : "grayscale(100%)",
-                  border: name === chapter ? "4px solid #f97316" : "2px solid transparent",
-                  borderRadius: "50%",
-                  transition: "all 0.3s ease",
-                }}
-              />
-            ))}
-          </div>
-=======
         <div
           className="slide-chapter-tag absolute flex items-center gap-4"
           style={{
@@ -112,7 +88,6 @@ function SlideShell({
               }}
             />
           ))}
->>>>>>> 508bb57924fd72908c33e0bc9614cd3c8318fdee
         </div>
       )}
       <div
@@ -2283,7 +2258,6 @@ const SLIDES: Slide[] = [
   // 27 — Cover Ação
   { id: 36, render: () => <ChapterCover num="05" name="Ação" image={acaoImg} range="" /> },
 
-<<<<<<< HEAD
   // 27.1 — Anatomia Estrutural de um Agente
   {
     id: 37,
@@ -2391,9 +2365,6 @@ const SLIDES: Slide[] = [
       </SlideShell>
     ),
   },
-
-=======
->>>>>>> 508bb57924fd72908c33e0bc9614cd3c8318fdee
   // 29 — Exercício final
   {
     id: 38,
